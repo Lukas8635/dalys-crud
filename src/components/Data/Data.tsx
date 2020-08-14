@@ -1,5 +1,3 @@
-
-
 export const brand = {
   title: "Markė",
   id: "brand1",

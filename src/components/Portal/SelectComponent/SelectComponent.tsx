@@ -19,34 +19,4 @@ const SelectComponent = (props: SelectComponentInterface) => (
 
 export default SelectComponent;
 
-// interface SelectComponentProps{
-//     id:string;f
-//     option:test;
-// }
 
-// interface test {
-//     title:string;
-//     kategorija: kategorijosinterfate[]
-// }
-
-// interface kategorijosinterfate{
-//     pav: string;
-//     id:string
-// }
-
-// {
-//     pav:'audi',
-//     id:'audi1',
-// },
-// {
-//     pav:'bmw',
-//     id:'bmw1',
-// },
-// {
-//     pav:'mb',
-//     id:'mb1',
-// },
-// {
-//     pav:'kita',
-//     id:'kita1',
-// }
