@@ -59,7 +59,7 @@ const Portal = () => {
           <SelectComponent
             id={brand.id}
             onChange={handleInput}
-            keyDB={'make'}
+            keyDB={brand.title}
             // 'make' - the key in Model
             title={brand.title}
             option={brand.option}

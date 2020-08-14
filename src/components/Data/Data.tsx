@@ -12,7 +12,7 @@ export const brand = {
     },
     {
       pav: "mb",
-      id: "bmb1",
+      id: "mb1",
     },
     {
       pav: "kita",

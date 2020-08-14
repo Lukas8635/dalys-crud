@@ -1,4 +1,5 @@
 import React from 'react';
+import { brand } from '../../Data/Data';
 
 interface SelectComponentInterface {
   title: string;
@@ -20,7 +21,7 @@ const SelectComponent: React.FC<SelectComponentInterface> = ({
   onChange,
 }) => { 
   return (
-  <li>
+  <li key={id}>
     <label htmlFor='brand'>{title}</label>
     <select
       name=''
@@ -30,7 +31,7 @@ const SelectComponent: React.FC<SelectComponentInterface> = ({
       }
     >
       {option.map((item) => (
-        <option value={item.id}>{item.pav}</option>
+        <option value={item.pav}>{item.pav}</option>
       ))}
     </select>
   </li>
