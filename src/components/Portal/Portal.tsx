@@ -15,6 +15,32 @@ import {
 import SelectInput from "./SelectInput/SelectInput";
 
 const Portal = () => {
+  
+  // This method 'maybe' will be use to get value from inputs
+  // const handleInput = (
+  //   e: React.ChangeEvent<HTMLSelectElement>,
+  //   key: string,
+  //   value: string
+  // ): { [key:string]: typeof value } => ({ [key]: value });
+
+  // test method, to log values.
+  const handleInput = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    key: string,
+    value: string
+  ) => {
+    console.log({ [key]: value });
+  };
+
+  /* 
+    Fetch to DB
+
+    (state) => fetch(post-method, state) 
+
+
+   */
+
+
   return (
     <div className={classes.Div}>
       <div className={classes.SubDiv}>
@@ -29,12 +55,16 @@ const Portal = () => {
 
             <button>PRIDĖTI AUTOMOBILĮ</button>
           </li>
+          {/* Markė */}
           <SelectComponent
             id={brand.id}
+            onChange={handleInput}
+            keyDB={'make'}
+            // 'make' - the key in Model
             title={brand.title}
             option={brand.option}
           />
-          <SelectComponent
+          {/* <SelectComponent
             id={model.id}
             title={model.title}
             option={model.option}
@@ -67,7 +97,7 @@ const Portal = () => {
             id={position.id}
             title={position.title}
             option={position.option}
-          />
+          /> */}
           <li>
             <label htmlFor="engine">variklis</label>
             <select name="" id="">
