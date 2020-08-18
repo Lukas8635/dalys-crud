@@ -1,8 +1,8 @@
-import React from 'react';
-import { brand } from '../../Data/Data';
+import React from "react";
+import { brand1 } from "../../Data/Data";
 
 interface SelectComponentInterface {
-  title: string;
+  title?: string;
   id: string;
   option: { pav: string; id: string }[];
   keyDB: string;
@@ -19,24 +19,26 @@ const SelectComponent: React.FC<SelectComponentInterface> = ({
   option,
   keyDB,
   onChange,
-}) => { 
+}) => {
   return (
-  <li key={id}>
-    <label htmlFor='brand'>{title}</label>
-    <select
-      name=''
-      id={id}
-      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-        onChange(e, keyDB, (e.target as HTMLSelectElement).value)
-      }
-    >
-      {option.map((item) => (
-        <option value={item.pav}>{item.pav}</option>
-      ))}
-    </select>
-  </li>
-);}
+    <li key={id}>
+      <label htmlFor="title">{title}</label>
+      <select
+        name=""
+        id={id}
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+          onChange(e, keyDB, (e.target as HTMLSelectElement).value)
+        }
+      >
+        {option.map((item) => (
+          
+          <option value={item.pav}>{item.pav}</option>
+          
+        ))}
+        
+      </select>
+    </li>
+  );
+};
 
 export default SelectComponent;
-
-
