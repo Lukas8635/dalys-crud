@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import testas from "../../img/testas.png";
-import classes from "./Portal.module.scss";
-import SelectComponent from "./SelectComponent/SelectComponent";
-import {
-  category,
-  subCategory,
-  condition,
-  position,
-  partNameSearch,
-  partName,
-  brand1,
-} from "../Data/Data";
-import SelectInput from "./SelectInput/SelectInput";
+import React, { useState } from 'react';
+import testas from '../../img/testas.png';
+
+import SelectOptions from './SelectOptions/SelectOptions';
+import SelectUserInput from '../SelectUserInput/SelectUserInput.comp';
+
+import { brand1, CarCollectByBrand, OptionInterface } from '../Data/Data';
+
+import classes from './Portal.module.scss';
 
 const Portal = () => {
+  const [models, setModelsOptions] = useState([{ pav: '----', id: 'noneID' }]);
+  const [model, setModel] = useState('');
   // This method 'maybe' will be use to get value from inputs
   // const handleInput = (
   //   e: React.ChangeEvent<HTMLSelectElement>,
@@ -22,44 +19,36 @@ const Portal = () => {
   // ): { [key:string]: typeof value } => ({ [key]: value });
 
   // test method, to log values.
+
+  console.log(model);
+
+  const getModelOptions = (value: string, brands: CarCollectByBrand) => {
+    brands.option.map((item: OptionInterface) =>
+      item.pav === value ? setModelsOptions(item.models) : null
+    );
+  };
+
   const handleInput = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    key: string,
-    value: string
+    // key: string,
+    value: string,
   ) => {
-    // console.log({ [key]: value });
     switch (true) {
-      case value === "BMW":
-        console.log(brand1.option[1].models);
+      case value === 'BMW':
+        console.log(brand1.option[1].models[1].pav);
+        getModelOptions(value, brand1);
         break;
-      case value === "Audi":
-        console.log(brand1.option[2].models);
+      case value === 'Audi':
+        getModelOptions(value, brand1);
+        break;
+      case value === brand1.option[1].models[1].pav:
+        console.log(brand1.option[1].models[1].pav);
+        // setModels(brand1.option[1].models[1].pav)
         break;
       default:
-        console.log("Pasirinkite marke");
+        console.log('Pasirinkite marke');
     }
   };
-   const[brandsModel, setBrandsModel] = useState([
-     brand1.option
-   ])
-   const setCarModel= ()=>{
-     setBrandsModel (=>{
-       
-       const newCarModel ={
-         ...brand1.option
-       };
-       
-       return newCarModel
-     });
-   }
-   console.log(brand1.option);
-  /* 
-    Fetch to DB
-
-    (state) => fetch(post-method, state) 
-
-
-   */
 
   return (
     <div className={classes.Div}>
@@ -67,33 +56,34 @@ const Portal = () => {
         <h3>PRIDĖTI DETALĘ</h3>
 
         <ul className={classes.ListStyle}>
-          <li>
-            <label htmlFor="select auto"> Pasirinkti automobilį</label>
-            <select name="" id="">
-              <option value="">123</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='select auto'> Pasirinkti automobilį</label>
+            <select name='' id=''>
+              <option value=''>123</option>
             </select>
 
             <button>PRIDĖTI AUTOMOBILĮ</button>
           </li>
           {/* Markė */}
 
-          <SelectComponent
-            id={brand1.id}
+          <SelectOptions
+            // id={brand1.id}
             onChange={handleInput}
-            keyDB={brand1.id}
+            // keyDB={brand1.id}
             // 'make' - the key in Model
             title={brand1.title}
             option={brand1.option}
           />
-          <SelectComponent
-            id={brand1.id}
-            onC={setBrandsModel}
-            keyDB={brand1.id}
+          <SelectUserInput
+            // id={brand1.id
+
+            onChange={setModel}
+            // keyDB={brand1.id}
             // 'make' - the key in Model
-            
-            option={brand1.option}
+
+            option={models}
           />
-          {/* <li>
+          {/* <li className={classes.formGroup}>
             <label htmlFor="build year">Pagaminimo metai</label>
             <select name="" id="">
               <option value=""> 3</option>
@@ -129,28 +119,28 @@ const Portal = () => {
             title={position.title}
             option={position.option}
           /> */}
-          <li>
-            <label htmlFor="engine">variklis</label>
-            <select name="" id="">
-              <option value="">10</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='engine'>variklis</label>
+            <select name='' id=''>
+              <option value=''>10</option>
             </select>
           </li>
-          <li>
-            <label htmlFor="body type">Kėbulo tipas </label>
-            <select name="" id="">
-              <option value="">11</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='body type'>Kėbulo tipas </label>
+            <select name='' id=''>
+              <option value=''>11</option>
             </select>
           </li>
-          <li>
-            <label htmlFor="steering wheel position">Vairo padėtis</label>
-            <select name="" id="">
-              <option value="">12</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='steering wheel position'>Vairo padėtis</label>
+            <select name='' id=''>
+              <option value=''>12</option>
             </select>
           </li>
-          <li>
-            <label htmlFor="driving wheel">Varomieji ratai</label>
-            <select name="" id="">
-              <option value="">13</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='driving wheel'>Varomieji ratai</label>
+            <select name='' id=''>
+              <option value=''>13</option>
             </select>
           </li>
         </ul>
@@ -161,72 +151,74 @@ const Portal = () => {
 
       <div className={classes.SubDiv}>
         <ul className={classes.ListStyle}>
-          <li>
-            <label htmlFor="gear box">Pavarų dežė</label>
-            <select name="" id="">
-              <option value="">1</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='gear box'>Pavarų dežė</label>
+            <select name='' id=''>
+              <option value=''>1</option>
             </select>
           </li>
-          <li>
-            <label htmlFor="color">Spalva</label>
-            <select name="" id="">
-              <option value="">2</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='color'>Spalva</label>
+            <select name='' id=''>
+              <option value=''>2</option>
             </select>
           </li>
-          <li>
-            <label htmlFor="odometer">Rida </label>
-            <input type="text" />
+          <li className={classes.formGroup}>
+            <label htmlFor='odometer'>Rida </label>
+            <input type='text' />
           </li>
-          <li>
-            <label htmlFor="fuel">Kuras </label>
-            <select name="" id="">
-              <option value="">4</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='fuel'>Kuras </label>
+            <select name='' id=''>
+              <option value=''>4</option>
             </select>
           </li>
-          <li>
-            <label htmlFor="engine capacity">Variklio talpa</label>
-            <select name="" id="">
-              <option value="">5</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='engine capacity'>Variklio talpa</label>
+            <select name='' id=''>
+              <option value=''>5</option>
             </select>
           </li>
-          <li>
-            <label htmlFor="engine power">Variklio galia</label>
-            <select name="" id="">
-              <option value="">6</option>
+          <li className={classes.formGroup}>
+            <label htmlFor='engine power'>Variklio galia</label>
+            <select name='' id=''>
+              <option value=''>6</option>
             </select>
           </li>
-          <li>
-            <label htmlFor="lenght">Ilgis ,cm</label>
-            <input type="text" />
+          <li className={classes.formGroup}>
+            <label htmlFor='lenght'>Ilgis ,cm</label>
+            <input type='text' />
           </li>
-          <li>
-            <label htmlFor="width">Plotis, cm</label>
-            <input type="text" />
+          <li className={classes.formGroup}>
+            <label htmlFor='width'>Plotis, cm</label>
+            <input type='text' />
           </li>
-          <li>
-            <label htmlFor="height">Aukštis, cm</label>
-            <input type="text" />
+          <li className={classes.formGroup}>
+            <label htmlFor='height'>Aukštis, cm</label>
+            <input type='text' />
           </li>
-          <li>
-            <label htmlFor="weight"> Svoris, kg</label>
-            <input type="text" />
+          <li className={classes.formGroup}>
+            <label htmlFor='weight'> Svoris, kg</label>
+            <input type='text' />
           </li>
-          <li>
-            <label htmlFor="price">Kaina</label>
-            <input type="text" />
+          <li className={classes.formGroup}>
+            <label htmlFor='price'>Kaina</label>
+            <input type='text' />
           </li>
         </ul>
         <p>Aprašymas</p>
-        <textarea name=""></textarea>
+        <textarea name=''></textarea>
       </div>
 
-      <div className={classes.SubDiv}>
+      {/* Image */}
+
+      {/* <div className={classes.SubDiv}>
         <p>Pridėti nuotraukas:</p>
         <div>
-          <img src={testas} alt="nuotrauka" />
+          <img src={testas} alt='nuotrauka' />
         </div>
         <button>PRIDETI</button>
-      </div>
+      </div> */}
     </div>
   );
 };

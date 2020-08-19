@@ -1,63 +1,63 @@
-import React from "react";
+import React from 'react';
 
 const UserInputObject = {
   //automobilio markė
-  brand: "BMW",
+  brand: 'BMW',
   //automobilio modelis
-  model: "X5",
+  model: 'X5',
   //automobilio pagaminimmo metai
-  carProductionYear: "2015",
+  carProductionYear: '2015',
   //detalės pavadinimo paieška
-  partNameSearch: "input",
+  partNameSearch: 'input',
   //detalės kategorija
   category: {
-    name: "Variklio skyrius",
-    iconURL: "string",
+    name: 'Variklio skyrius',
+    iconURL: 'string',
   },
   //detalės subkategorija
   subCategory: {
-    name: "Variklis",
-    iconURL: "string",
+    name: 'Variklis',
+    iconURL: 'string',
   },
   //detalės pavadinimas
-  name: "BMW variklis x5",
+  name: 'BMW variklis x5',
   //detalės būklė
   condition: {
-    enum: ["new"],
+    enum: ['new'],
   },
   //detalės pozicija
   position: {
-    enum: ["front"],
+    enum: ['front'],
   },
   //variklio tipas
-  engine: "V8",
+  engine: 'V8',
   //kėbulo tipas
   bodyType: {
-    enum: ["suv"],
+    enum: ['suv'],
   },
   //vairo padėtis
   steeringWheelPosition: {
-    enum: ["left"],
+    enum: ['left'],
   },
   //varomieji ratai
   drivingWheels: {
-    enum: ["all"],
+    enum: ['all'],
   },
   // detalės gamintojo kodų masyvas
-  codes: ["string"],
+  codes: ['string'],
   //pavarų dežė
   transmission: {
-    enum: ["automatic"],
+    enum: ['automatic'],
   },
   //kėbulo spalva
   carColor: {
-    enum: ["black"],
+    enum: ['black'],
   },
   //rida
   odometer: 50100,
   //kuras
   fuel: {
-    enum: ["gasoline"],
+    enum: ['gasoline'],
   },
   //variklio tūris cm3
   engineCapacity: 5000,
@@ -79,3 +79,42 @@ const UserInputObject = {
 };
 
 export default UserInputObject;
+
+const UserInputObject002 = {
+  brand: 'BMW',
+  model: 'X5',
+  carProductionYear: '2015',
+  // partNameSearch: 'input',
+  category: {
+    name: 'Variklio skyrius',
+    iconURL: 'string',
+  },
+  subCategory: {
+    name: 'Variklis',
+    iconURL: 'string',
+  },
+  name: 'BMW variklis x5',
+  condition: 'new',
+  position: 'front',
+  engine: 'V8',
+  bodyType: 'suv',
+  steeringWheelPosition: 'left',
+  drivingWheels: 'all',
+  codes: ['string'],
+  transmission: 'automatic',
+  carColor: 'black',
+  odometer: 50100,
+  fuel: 'gasoline',
+  engineCapacity: 5000,
+  enginePower: {
+    kW: 260,
+    hp: 349,
+  },
+  dimensions: {
+    length: 220,
+    width: 120,
+    height: 120,
+    weight: 400,
+    price: 6000,
+  },
+};
