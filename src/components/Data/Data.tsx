@@ -248,87 +248,99 @@ const audiR8Engines = {
   ],
 };
 
-
-
 export const conditionPart = {
   title: "Būklė",
-  option: ["Nauja", "Naudota", "Restauruota"],
+  option: [
+    { title: "Nauja", id: "new" },
+    { title: "Naudota", id: "used" },
+    { title: "Restauruota", id: "refurbished" },
+  ],
 };
 
 export const positionPart = {
   title: "Pozicija",
   option: [
-    "Priekyje",
-    "Gale",
-    "Kairėje",
-    "Dešinėje",
-    "Kairėje,priekyje",
-    "Dešinėje,priekyje",
-    "Kairėje,gale",
-    "Dešinėje,gale",
+    { title: "Priekyje", id: "front" },
+    { title: "Gale", id: "rear" },
+    { title: "Kairėje", id: "left" },
+    { title: "Dešinėje", id: "right" },
+    { title: "Priekyje,kairėje", id: "front_left" },
+    { title: "Priekyje,dešinėje", id: "front_right" },
+    { title: "Gale,kairėje", id: "rear_left" },
+    { title: "Gale,dešinėje", id: "rear_right" },
   ],
 };
 
 export const bodyType = {
   title: "Kėbulo tipas",
   option: [
-    {title:"Sedanas", id: "sedan"},
-    "Universalas",
-    "Hečbekas",
-    "Vienatūris",
-    "Visureigis",
-    "Kupė(Coupe)",
-    "Komercinis",
-    "Kabrioletas",
-    "Limuzinas",
-    "Pikapas",
-    { title: "Kita", id:'other'},
+    { title: "Sedanas", id: "sedan" },
+    { title: "Universalas", id: "caravan" },
+    { title: "Hečbekas", id: "hatchback" },
+    { title: "Vienatūris", id: "minivan" },
+    { title: "Visureigis", id: "suv" },
+    { title: "Kupė(Coupe)", id: "coupe" },
+    { title: "Komercinis", id: "comemrtial" },
+    { title: "Kabrioletas", id: "cabriolet" },
+    { title: "Limuzinas", id: "limousine" },
+    { title: "Pikapas", id: "pickup" },
+    { title: "Kita", id: "other" },
   ],
 };
 
 export const steeringWheelPosition = {
   title: "Vairo padėtis",
-  option: ["Kairė", "dešinė"],
+  option: [
+    { title: "Kairė", id: "left" },
+    { title: "dešinė", id: "right" },
+  ],
 };
 
 export const steeringWheel = {
   title: "Varomieji ratai",
-  option: ["Priekiniai", "Galiniai", "Visi"],
+  option: [
+    { title: "Priekiniai", id: "front" },
+    { title: "Galiniai", id: "rear" },
+    { title: "Visi", id: "all" },
+  ],
 };
 
 export const gearBox = {
   title: "Pavarų dežė",
-  option: ["Automatine", "Mechaninė"],
+  option: [
+    { title: "Automatine", id: "automatic" },
+    { title: "Mechaninė", id: "manual" },
+  ],
 };
 
 export const colorPart = {
   title: "Spalva",
   option: [
-    "Juoda",
-    "Pilka",
-    "Balta",
-    "Violetinė",
-    "Mėlyna",
-    "Žalia",
-    "Geltona",
-    "Oranžinė",
-    "Raudona",
-    "Ruda",
-    "Maišyta",
-    "Kita",
+    { title: "Juoda", id: "black" },
+    { title: "Pilka", id: "grey" },
+    { title: "Balta", id: "white" },
+    { title: "Violetinė", id: "violet" },
+    { title: "Mėlyna", id: "blue" },
+    { title: "Žalia", id: "green" },
+    { title: "Geltona", id: "yellow" },
+    { title: "Oranžinė", id: "orange" },
+    { title: "Raudona", id: "red" },
+    { title: "Ruda", id: "brown" },
+    { title: "Maišyta", id: "mixed" },
+    { title: "Kita", id: "other" },
   ],
 };
 
-export const fuel={
-  title:"Kuro tipas",
-  option:[
-    "Dyzelinas",
-    "Benzinas",
-    "Benzinas/Dujos",
-    "Benzinas/Elektra",
-    "Elektra",
-    "Dyzelinas/Elektra",
-    "Bioetanolis",
-    "Kita",
-  ]
-}
+export const fuel = {
+  title: "Kuro tipas",
+  option: [
+    { title: "Dyzelinas", id: "diesel" },
+    { title: "Benzinas", id: "gasonile" },
+    { title: "Benzinas/Dujos", id: "gasoline_gas" },
+    { title: "Benzinas/Elektra", id: "gasoline_electricity" },
+    { title: "Elektra", id: "electriciry" },
+    { title: "Dyzelinas/Elektra", id: "diesel_electricity" },
+    { title: "Bioetanolis", id: "bioethanol" },
+    { title: "Kita", id: "other" },
+  ],
+};
