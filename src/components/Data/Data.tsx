@@ -248,16 +248,7 @@ const audiR8Engines = {
   ],
 };
 
-export const getYearsmModel = () => {
-  const date = new Date();
-  const option = date.getFullYear();
-  let yearsArray = [];
-  const title = "Variklis";
-  for (let i = 0; i < 71; i++) {
-    yearsArray.push(option - i);
-  }
-  return yearsArray;
-};
+
 
 export const conditionPart = {
   title: "Būklė",
@@ -281,7 +272,7 @@ export const positionPart = {
 export const bodyType = {
   title: "Kėbulo tipas",
   option: [
-    "Sedanas",
+    {title:"Sedanas", id: "sedan"},
     "Universalas",
     "Hečbekas",
     "Vienatūris",
@@ -291,7 +282,7 @@ export const bodyType = {
     "Kabrioletas",
     "Limuzinas",
     "Pikapas",
-    "Kita",
+    { title: "Kita", id:'other'},
   ],
 };
 

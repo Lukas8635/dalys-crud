@@ -1,6 +1,4 @@
-import React from "react";
-import { getYearsmModel } from "../../Data/Data";
-import { title } from "process";
+import React from 'react';
 
 export interface CustomSelectPropsInterface {
   selectCompLabel: string | number;
@@ -10,7 +8,7 @@ export interface CustomSelectPropsInterface {
 const SelectComp: Function = (props: CustomSelectPropsInterface) => {
   return (
     <div>
-      <label htmlFor="as">{props.selectCompLabel}</label>
+      <label htmlFor='as'>{props.selectCompLabel}</label>
 
       <select>
         <option value={0}>----</option>
