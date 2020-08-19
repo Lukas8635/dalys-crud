@@ -1,21 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import testas from "../../img/testas.png";
 import classes from "./Portal.module.scss";
 import SelectComponent from "./SelectComponent/SelectComponent";
 import {
-  brand,
-  model,
   category,
   subCategory,
   condition,
   position,
   partNameSearch,
   partName,
+  brand1,
 } from "../Data/Data";
 import SelectInput from "./SelectInput/SelectInput";
 
 const Portal = () => {
-  
   // This method 'maybe' will be use to get value from inputs
   // const handleInput = (
   //   e: React.ChangeEvent<HTMLSelectElement>,
@@ -29,9 +27,32 @@ const Portal = () => {
     key: string,
     value: string
   ) => {
-    console.log({ [key]: value });
+    // console.log({ [key]: value });
+    switch (true) {
+      case value === "BMW":
+        console.log(brand1.option[1].models);
+        break;
+      case value === "Audi":
+        console.log(brand1.option[2].models);
+        break;
+      default:
+        console.log("Pasirinkite marke");
+    }
   };
-
+   const[brandsModel, setBrandsModel] = useState([
+     brand1.option
+   ])
+   const setCarModel= ()=>{
+     setBrandsModel (=>{
+       
+       const newCarModel ={
+         ...brand1.option
+       };
+       
+       return newCarModel
+     });
+   }
+   console.log(brand1.option);
   /* 
     Fetch to DB
 
@@ -39,7 +60,6 @@ const Portal = () => {
 
 
    */
-
 
   return (
     <div className={classes.Div}>
@@ -56,21 +76,24 @@ const Portal = () => {
             <button>PRIDĖTI AUTOMOBILĮ</button>
           </li>
           {/* Markė */}
-          <SelectComponent
-            id={brand.id}
-            onChange={handleInput}
-            keyDB={'make'}
-            // 'make' - the key in Model
-            title={brand.title}
-            option={brand.option}
-          />
-          {/* <SelectComponent
-            id={model.id}
-            title={model.title}
-            option={model.option}
-          />
 
-          <li>
+          <SelectComponent
+            id={brand1.id}
+            onChange={handleInput}
+            keyDB={brand1.id}
+            // 'make' - the key in Model
+            title={brand1.title}
+            option={brand1.option}
+          />
+          <SelectComponent
+            id={brand1.id}
+            onC={setBrandsModel}
+            keyDB={brand1.id}
+            // 'make' - the key in Model
+            
+            option={brand1.option}
+          />
+          {/* <li>
             <label htmlFor="build year">Pagaminimo metai</label>
             <select name="" id="">
               <option value=""> 3</option>
@@ -79,22 +102,30 @@ const Portal = () => {
           <SelectInput title={partNameSearch.title}/>
           <SelectComponent
             id={category.id}
+            onChange={handleInput}
+            keyDB={category.title}
             title={category.title}
             option={category.option}
           />
           <SelectComponent
             id={subCategory.id}
+            onChange={handleInput}
+            keyDB={subCategory.title}
             title={subCategory.title}
             option={subCategory.option}
           />
           <SelectInput title={partName.title}/>
           <SelectComponent
             id={condition.id}
+            onChange={handleInput}
+            keyDB={condition.title}
             title={condition.title}
             option={condition.option}
           />
           <SelectComponent
             id={position.id}
+            onChange={handleInput}
+            keyDB={position.title}
             title={position.title}
             option={position.option}
           /> */}

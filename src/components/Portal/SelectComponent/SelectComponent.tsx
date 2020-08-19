@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
+import { brand1 } from "../../Data/Data";
 
 interface SelectComponentInterface {
-  title: string;
+  title?: string;
   id: string;
   option: { pav: string; id: string }[];
   keyDB: string;
@@ -18,54 +19,26 @@ const SelectComponent: React.FC<SelectComponentInterface> = ({
   option,
   keyDB,
   onChange,
-}) => { 
+}) => {
   return (
-  <li>
-    <label htmlFor='brand'>{title}</label>
-    <select
-      name=''
-      id={id}
-      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-        onChange(e, keyDB, (e.target as HTMLSelectElement).value)
-      }
-    >
-      {option.map((item) => (
-        <option value={item.id}>{item.pav}</option>
-      ))}
-    </select>
-  </li>
-);}
+    <li key={id}>
+      <label htmlFor="title">{title}</label>
+      <select
+        name=""
+        id={id}
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+          onChange(e, keyDB, (e.target as HTMLSelectElement).value)
+        }
+      >
+        {option.map((item) => (
+          
+          <option value={item.pav}>{item.pav}</option>
+          
+        ))}
+        
+      </select>
+    </li>
+  );
+};
 
 export default SelectComponent;
-
-// interface SelectComponentProps{
-//     id:string;f
-//     option:test;
-// }
-
-// interface test {
-//     title:string;
-//     kategorija: kategorijosinterfate[]
-// }
-
-// interface kategorijosinterfate{
-//     pav: string;
-//     id:string
-// }
-
-// {
-//     pav:'audi',
-//     id:'audi1',
-// },
-// {
-//     pav:'bmw',
-//     id:'bmw1',
-// },
-// {
-//     pav:'mb',
-//     id:'mb1',
-// },
-// {
-//     pav:'kita',
-//     id:'kita1',
-// }

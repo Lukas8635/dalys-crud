@@ -1,50 +1,53 @@
+// export interface CarCollectByBrand {
+//   id: string;
+//   title: string;
+//   option: ModelInterface[];
+// }
+
+// export interface ModelInterface {
+//   id: string;
+//   pav: string;
+// }
+
+// export interface OptionInterface{
+//   id:string;
+//   pav:string;
+//   model:ModelInterface
+
+// }
+
+// export const brand: CarCollectByBrand[] =  [
 
 
-export const brand = {
-  title: "Markė",
+export const brand1 = {
   id: "brand1",
+  title: "Marke",
   option: [
     {
-      pav: "bmw",
-      id: "bmw1",
+      id: "noneID",
+      pav: "-",
     },
     {
-      pav: "audi",
-      id: "audi1",
+      id: "bmwId",
+      pav: "BMW",
+      models: [
+        { pav: "X5", id: "x5Id" },
+        { pav: "X3", id: "x3Id" },
+        { pav: "530", id: "530Id" },
+      ],
     },
     {
-      pav: "mb",
-      id: "bmb1",
-    },
-    {
-      pav: "kita",
-      id: "kita1",
+      id: "audiId",
+      pav: "Audi",
+      models: [
+        { pav: "100", id: "100Id" },
+        { pav: "80", id: "80Id" },
+        { pav: "R8", id: "r8Id" },
+      ],
     },
   ],
 };
 
-export const model = {
-  title: "Modelis",
-  id: "model1",
-  option: [
-    {
-      pav: "1",
-      id: "model1",
-    },
-    {
-      pav: "2",
-      id: "model2",
-    },
-    {
-      pav: "3",
-      id: "model3",
-    },
-    {
-      pav: "4",
-      id: "model4",
-    },
-  ],
-};
 
 export const category = {
   title: "Kategorija",
@@ -130,10 +133,54 @@ export const position = {
   ],
 };
 
-export const partNameSearch ={
-  title:"Detalės pavadinimo paieška",
+export const partNameSearch = {
+  title: "Detalės pavadinimo paieška",
 };
 
-export const partName ={
-  title:"Detalės pavadinimas",
+export const partName = {
+  title: "Detalės pavadinimas",
 };
+
+// const bmwModel = {
+//   modelId:brand.option[0],
+//   option:[
+//     {
+//       title:'X5',
+//       id:'bmwX5'
+//     },
+//     {
+//       title:'M3',
+//       id:'bmwM3'
+//     },
+//     {
+//       title:'3 Serija',
+//       id:'bmw3serija'
+//     }
+//   ]
+// }
+
+// console.log(brand.option[0]);
+// console.log(bmwModel.brandId);
+//   {
+//     id: "bmwId",
+//     title: "BMW",
+//     option: [
+//       { id: "x5Id", pav: "X5" },
+//       { id: "x3Id", pav: "X3" },
+//       { id: "530Id", pav: "530" },
+//     ],
+//   },
+//   {
+//     id: "audiId",
+//     title: "AUDI",
+//     option: [
+//       { id: "100Id", pav: "100" },
+//       { id: "80Id", pav: "80" },
+//       { id: "r8Id", pav: "R8" },
+//     ],
+//   },
+// ];
+
+// if(brand[0].id !== brand[0].option[1].id){
+//   console.log('kazkas eina');
+// }
