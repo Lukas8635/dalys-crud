@@ -1,5 +1,5 @@
-import React from 'react';
-import { CarCollectByBrand } from '../../Data/Data';
+import React from "react";
+import { CarCollectByBrand } from "../../Data/Data";
 
 interface SelectComponentInterface {
   title?: string;
@@ -23,9 +23,9 @@ const SelectOptions: React.FC<SelectComponentInterface> = ({
   console.log(option);
   return (
     <li>
-      <label htmlFor='title'>{title}</label>
+      <label htmlFor="title">{title}</label>
       <select
-        name=''
+        name=""
         // id={id}
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
           onChange(e, (e.target as HTMLSelectElement).value)
