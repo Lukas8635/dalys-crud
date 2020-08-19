@@ -5,7 +5,7 @@ import Portal from './components/Portal/Portal';
 // import Testas from './testas';
 // import Testas from './testas';
 
-function App() {
+const App = (): JSX.Element =>  {
   return (
     <div className='App'>
       <Portal/>

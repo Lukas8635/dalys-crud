@@ -1,21 +1,19 @@
 export interface CarCollectByBrand {
   id: string;
   title: string;
-  option: ModelInterface[];
+  option: OptionInterface[];
 }
 
 export interface OptionInterface {
   id: string;
   pav: string;
-  models?: ModelInterface;
+  models: ModelInterface[];
 }
 
 export interface ModelInterface {
-  id: string;
   pav: string;
+  id: string;
 }
-
-// export const brand: CarCollectByBrand[] =  [
 
 export const brand1 = {
   id: "brand1",
@@ -24,11 +22,13 @@ export const brand1 = {
     {
       id: "noneID",
       pav: "-",
+      models: [],
     },
     {
       id: "bmwId",
       pav: "BMW",
       models: [
+        { pav: "---", id: "nodeID" },
         { pav: "X5", id: "x5Id" },
         { pav: "X3", id: "x3Id" },
         { pav: "530", id: "530Id" },
@@ -38,6 +38,7 @@ export const brand1 = {
       id: "audiId",
       pav: "Audi",
       models: [
+        { pav: "---", id: "nodeID" },
         { pav: "100", id: "100Id" },
         { pav: "80", id: "80Id" },
         { pav: "R8", id: "r8Id" },
@@ -138,29 +139,31 @@ export const partName = {
   title: "Detalės pavadinimas",
 };
 
+//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< Engine >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 const bmwX5Engines = {
   model: "X5",
   engines: [
     {
       pav: "xDrive 3.0d 180kW",
-      engPower: '180 kW',
+      engPower: "180 kW",
       engCapacity: 3000,
-      fuel:'Diesel',
-      year: 2013
+      fuel: "Diesel",
+      year: [2013, 2014, 2015],
     },
     {
       pav: "xDrive 3.5i 235kW",
-      engPower: '235 kW',
+      engPower: "235 kW",
       engCapacity: 3500,
-      fuel:'Gasoline',
-      year: 2013
+      fuel: "Gasoline",
+      year: [2013, 2014, 2015],
     },
     {
       pav: "xDrive 5.0i 300kW",
-      engPower: '300 kW',
+      engPower: "300 kW",
       engCapacity: 5000,
-      fuel:'Gasoline',
-      year: 2013
+      fuel: "Gasoline",
+      year: [2013, 2014, 2015],
     },
   ],
 };
@@ -170,77 +173,171 @@ const bmwX3Engines = {
   engines: [
     {
       pav: "xDrive 1.8d 100kW",
-      engPower: '100 kW',
+      engPower: "100 kW",
       engCapacity: 1800,
-      fuel:'Diesel',
-      year: 2013
+      fuel: "Diesel",
+      year: 2013,
     },
     {
       pav: "xDrive 3.0i 200kW",
-      engPower: '200 kW',
+      engPower: "200 kW",
       engCapacity: 3000,
-      fuel:'Gasoline',
-      year: 2010
+      fuel: "Gasoline",
+      year: 2010,
     },
   ],
 };
 
 const audi100Engines = {
-  model:'100',
-  engines:[
+  model: "100",
+  engines: [
     {
       pav: "1.8i 55kW",
-      engPower: '55 kW',
+      engPower: "55 kW",
       engCapacity: 1800,
-      fuel:'Gasoline',
-      year: 1983
+      fuel: "Gasoline",
+      year: 1983,
     },
     {
       pav: "2.0d 51kW",
-      engPower: '51 kW',
+      engPower: "51 kW",
       engCapacity: 2000,
-      fuel:'Diesel',
-      year: 1983
+      fuel: "Diesel",
+      year: 1983,
     },
-  ]
-}
+  ],
+};
 
 const audi80Engines = {
-  model:'80',
-  engines:[
+  model: "80",
+  engines: [
     {
       pav: "1.5i 45kW",
-      engPower: '45 kW',
+      engPower: "45 kW",
       engCapacity: 1500,
-      fuel:'Gasoline',
-      year: 1989
+      fuel: "Gasoline",
+      year: 1989,
     },
     {
       pav: "2.0i 69kW",
-      engPower: '69 kW',
+      engPower: "69 kW",
       engCapacity: 2000,
-      fuel:'Gasoline',
-      year: 1991
+      fuel: "Gasoline",
+      year: 1991,
     },
-  ]
-}
+  ],
+};
 
-const audiR8Engines ={
-  model :'R8',
-  engines:[
+const audiR8Engines = {
+  model: "R8",
+  engines: [
     {
       pav: "4.2 FSI quattro 316kW",
-      engPower: '316 kW',
+      engPower: "316 kW",
       engCapacity: 4200,
-      fuel:'Gasoline',
-      year: 2015
+      fuel: "Gasoline",
+      year: 2015,
     },
     {
       pav: "5.2 FSI quattro 412kW",
-      engPower: '412 kW',
+      engPower: "412 kW",
       engCapacity: 5200,
-      fuel:'Gasoline',
-      year: 2013
+      fuel: "Gasoline",
+      year: 2013,
     },
+  ],
+};
+
+export const getYearsmModel = () => {
+  const date = new Date();
+  const option = date.getFullYear();
+  let yearsArray = [];
+  const title = "Variklis";
+  for (let i = 0; i < 71; i++) {
+    yearsArray.push(option - i);
+  }
+  return yearsArray;
+};
+
+export const conditionPart = {
+  title: "Būklė",
+  option: ["Nauja", "Naudota", "Restauruota"],
+};
+
+export const positionPart = {
+  title: "Pozicija",
+  option: [
+    "Priekyje",
+    "Gale",
+    "Kairėje",
+    "Dešinėje",
+    "Kairėje,priekyje",
+    "Dešinėje,priekyje",
+    "Kairėje,gale",
+    "Dešinėje,gale",
+  ],
+};
+
+export const bodyType = {
+  title: "Kėbulo tipas",
+  option: [
+    "Sedanas",
+    "Universalas",
+    "Hečbekas",
+    "Vienatūris",
+    "Visureigis",
+    "Kupė(Coupe)",
+    "Komercinis",
+    "Kabrioletas",
+    "Limuzinas",
+    "Pikapas",
+    "Kita",
+  ],
+};
+
+export const steeringWheelPosition = {
+  title: "Vairo padėtis",
+  option: ["Kairė", "dešinė"],
+};
+
+export const steeringWheel = {
+  title: "Varomieji ratai",
+  option: ["Priekiniai", "Galiniai", "Visi"],
+};
+
+export const gearBox = {
+  title: "Pavarų dežė",
+  option: ["Automatine", "Mechaninė"],
+};
+
+export const colorPart = {
+  title: "Spalva",
+  option: [
+    "Juoda",
+    "Pilka",
+    "Balta",
+    "Violetinė",
+    "Mėlyna",
+    "Žalia",
+    "Geltona",
+    "Oranžinė",
+    "Raudona",
+    "Ruda",
+    "Maišyta",
+    "Kita",
+  ],
+};
+
+export const fuel={
+  title:"Kuro tipas",
+  option:[
+    "Dyzelinas",
+    "Benzinas",
+    "Benzinas/Dujos",
+    "Benzinas/Elektra",
+    "Elektra",
+    "Dyzelinas/Elektra",
+    "Bioetanolis",
+    "Kita",
   ]
 }
