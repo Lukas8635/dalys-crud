@@ -1,21 +1,27 @@
 import React from 'react';
 
 export interface CustomSelectPropsInterface {
-  selectCompLabel: string | number;
-  optionsArray: (string | number)[];
+  label: string;
+  optionsArray: Option[];
+  handler: Function;
 }
+
+type Option = { title: string; id: string };
 
 const SelectComp: Function = (props: CustomSelectPropsInterface) => {
   return (
     <div>
-      <label htmlFor='as'>{props.selectCompLabel}</label>
-
-      <select>
+      <label htmlFor='as'>{props.label}</label>
+      <select
+        onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+          props.handler((event.target as HTMLSelectElement).value)
+        }
+      >
         <option value={0}>----</option>
-        {props.optionsArray.map((option) => {
+        {props.optionsArray.map((option: Option) => {
           return (
-            <option value={option} key={option}>
-              {option}
+            <option value={option.title} key={option.id}>
+              {option.title}
             </option>
           );
         })}

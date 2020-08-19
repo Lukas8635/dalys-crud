@@ -5,7 +5,7 @@ import SelectOptions from './SelectOptions/SelectOptions';
 import SelectUserInput from '../SelectUserInput/SelectUserInput.comp';
 
 import {
-  brand1,
+  brands,
   CarCollectByBrand,
   OptionInterface,
   conditionPart,
@@ -22,8 +22,15 @@ import classes from './Portal.module.scss';
 import SelectComp from './SelectComp/SelectComp';
 
 const Portal = () => {
-  const [models, setModelsOptions] = useState([{ pav: '----', id: 'noneID' }]);
+  const [models, setModelsOptions] = useState([
+    { title: '----', id: 'noneID' },
+  ]);
+  const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
+  const [year, setYear] = useState('');
+
+  console.log(brand);
+
   // This method 'maybe' will be use to get value from inputs
   // const handleInput = (
   //   e: React.ChangeEvent<HTMLSelectElement>,
@@ -33,11 +40,9 @@ const Portal = () => {
 
   // test method, to log values.
 
-  console.log(model);
-
   const getModelOptions = (value: string, brands: CarCollectByBrand) => {
     brands.option.map((item: OptionInterface) =>
-      item.pav === value ? setModelsOptions(item.models) : null
+      item.title === value ? setModelsOptions(item.models) : null
     );
   };
 
@@ -46,7 +51,9 @@ const Portal = () => {
     const option = date.getFullYear();
     let yearsArray = [];
     for (let i = 0; i < 71; i++) {
-      yearsArray.push(option - i);
+      // yearsArray.push(option - i);
+      const value = option - i;
+      yearsArray.push({ title: value.toString(), id: value.toString() });
     }
     return yearsArray;
   };
@@ -58,15 +65,15 @@ const Portal = () => {
   ) => {
     switch (true) {
       case value === 'BMW':
-        console.log(brand1.option[1].models[1].pav);
-        getModelOptions(value, brand1);
+        console.log(brands.option[1].models[1].title);
+        getModelOptions(value, brands);
         break;
       case value === 'Audi':
-        getModelOptions(value, brand1);
+        getModelOptions(value, brands);
         break;
-      case value === brand1.option[1].models[1].pav:
-        console.log(brand1.option[1].models[1].pav);
-        // setModels(brand1.option[1].models[1].pav)
+      case value === brands.option[1].models[1].title:
+        console.log(brands.option[1].models[1].title);
+        // setModels(brands.option[1].models[1].title)
         break;
       default:
         console.log('Pasirinkite marke');
@@ -89,52 +96,62 @@ const Portal = () => {
           </li>
           {/* Markė */}
 
-          <SelectOptions
-            // id={brand1.id}
-            onChange={handleInput}
-            // keyDB={brand1.id}
-            // 'make' - the key in Model
-            title={brand1.title}
-            option={brand1.option}
+          <SelectComp
+            optionsArray={brands.option}
+            handler={setBrand}
+            label={'Gamintojas'}
           />
+
+          <SelectComp 
+            
+          
+          />
+
+          {/* <SelectOptions
+            // id={brands.id}
+            onChange={handleInput}
+            // keyDB={brands.id}
+            // 'make' - the key in Model
+            title={brands.title}
+            options={brands.option}
+          /> */}
+          {/* <SelectComp optionsArray={brands.option} /> */}
           <SelectUserInput
-            // id={brand1.id
+            // id={brands.id
 
             onChange={setModel}
-            // keyDB={brand1.id}
+            // keyDB={brands.id}
             // 'make' - the key in Model
 
-            option={models}
+            options={models}
           />
 
           <SelectComp
             optionsArray={getYearsModel()}
-            selectCompLabel={'Metai'}
+            label={'Metai'}
+            handler={setYear}
           />
 
           <SelectComp
             optionsArray={conditionPart.option}
-            selectCompLabel={conditionPart.title}
+            label={conditionPart.title}
           />
 
           <SelectComp
             optionsArray={positionPart.option}
-            selectCompLabel={positionPart.title}
+            label={positionPart.title}
           />
 
-          <SelectComp
-            optionsArray={bodyType.option}
-            selectCompLabel={bodyType.title}
-          />
+          <SelectComp optionsArray={bodyType.option} label={bodyType.title} />
 
           <SelectComp
             optionsArray={steeringWheelPosition.option}
-            selectCompLabel={steeringWheelPosition.title}
+            label={steeringWheelPosition.title}
           />
 
           <SelectComp
             optionsArray={steeringWheel.option}
-            selectCompLabel={steeringWheel.title}
+            label={steeringWheel.title}
           />
           {/*
           <SelectInput title={partNameSearch.title}/>
@@ -175,19 +192,13 @@ const Portal = () => {
 
       <div className={classes.SubDiv}>
         <ul className={classes.ListStyle}>
-          <SelectComp
-            optionsArray={gearBox.option}
-            selectCompLabel={gearBox.title}
-          />
-          <SelectComp
-            optionsArray={colorPart.option}
-            selectCompLabel={colorPart.title}
-          />
+          <SelectComp optionsArray={gearBox.option} label={gearBox.title} />
+          <SelectComp optionsArray={colorPart.option} label={colorPart.title} />
           <li className={classes.formGroup}>
             <label htmlFor='odometer'>Rida </label>
             <input type='text' />
           </li>
-          <SelectComp optionsArray={fuel.option} selectCompLabel={fuel.title} />
+          <SelectComp optionsArray={fuel.option} label={fuel.title} />
           <li className={classes.formGroup}>
             <label htmlFor='engine capacity'>Variklio talpa</label>
             <select name='' id=''>

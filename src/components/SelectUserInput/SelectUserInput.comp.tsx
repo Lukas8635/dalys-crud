@@ -2,11 +2,11 @@ import React from 'react';
 
 interface Props {
   title?: string;
-  option: { pav: string; id: string }[];
+  options: { title: string; id: string }[];
   onChange: (value: string) => void;
 }
 
-const SelectUserInput: React.FC<Props> = ({ title, option, onChange }) => (
+const SelectUserInput: React.FC<Props> = ({ title, options, onChange }) => (
   <li>
     <label htmlFor='title'>{title}</label>
     <select
@@ -16,9 +16,9 @@ const SelectUserInput: React.FC<Props> = ({ title, option, onChange }) => (
         onChange((e.target as HTMLSelectElement).value)
       }
     >
-      {option.map((item, index: number) => (
-        <option key={index} value={item.pav}>
-          {item.pav}
+      {options.map((item, index: number) => (
+        <option key={index} value={item.title}>
+          {item.title}
         </option>
       ))}
     </select>

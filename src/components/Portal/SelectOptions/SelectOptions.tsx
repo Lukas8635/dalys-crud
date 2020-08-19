@@ -1,10 +1,9 @@
 import React from "react";
-import { CarCollectByBrand } from "../../Data/Data";
 
 interface SelectComponentInterface {
   title?: string;
   // id: string;
-  option: { pav: string; id: string }[];
+  options: { title: string; id: string }[];
   // keyDB: string;
   onChange: (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -16,24 +15,24 @@ interface SelectComponentInterface {
 const SelectOptions: React.FC<SelectComponentInterface> = ({
   title,
   // id,
-  option,
+  options,
   // keyDB,
   onChange,
 }) => {
-  console.log(option);
   return (
     <li>
-      <label htmlFor="title">{title}</label>
+      <label htmlFor='title'>{title}</label>
       <select
-        name=""
+        name=''
         // id={id}
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
           onChange(e, (e.target as HTMLSelectElement).value)
         }
       >
-        {option.map((item, index: number) => (
-          <option key={index} value={item.pav}>
-            {item.pav}
+        <option value={0}>----</option>
+        {options.map((item, index: number) => (
+          <option key={index} value={item.title}>
+            {item.title}
           </option>
         ))}
       </select>
