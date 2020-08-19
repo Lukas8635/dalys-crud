@@ -10,6 +10,7 @@ import {
   partNameSearch,
   partName,
   brand1,
+  CarCollectByBrand,
 } from "../Data/Data";
 import SelectInput from "./SelectInput/SelectInput";
 
@@ -39,20 +40,30 @@ const Portal = () => {
         console.log("Pasirinkite marke");
     }
   };
-   const[brandsModel, setBrandsModel] = useState([
-     brand1.option
-   ])
-   const setCarModel= ()=>{
-     setBrandsModel (=>{
+  //  const[brandsModel, setBrandsModel] = useState<CarCollectByBrand[]>([
+  //    brand1.option
+  //  ])
+  //  const setModels = () =>{
+  //    setBrandsModel((prevState))=>{
+  //      if(brand1.option[1].id === "bmwId"){
+  //        console.log(brand1.option[1].models);
+
+  //      }
+  //    }
+  //  }
+
+   
+  //  const setCarModel= ()=>{
+  //    setBrandsModel (=>{
        
-       const newCarModel ={
-         ...brand1.option
-       };
+  //      const newCarModel ={
+  //        ...brand1.option
+  //      };
        
-       return newCarModel
-     });
-   }
-   console.log(brand1.option);
+  //      return newCarModel
+  //    });
+  //  }
+   
   /* 
     Fetch to DB
 
@@ -87,10 +98,10 @@ const Portal = () => {
           />
           <SelectComponent
             id={brand1.id}
-            onC={setBrandsModel}
+            
             keyDB={brand1.id}
             // 'make' - the key in Model
-            
+            onChange={handleInput}
             option={brand1.option}
           />
           {/* <li>
