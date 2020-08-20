@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SelectComp, { Option } from './SelectComp/SelectComp';
 import SelectUserInput from '../SelectUserInput/SelectUserInput.comp';
 
-import { mockState } from '../../store/categories';
+import { mockState, DataModal } from '../../store/categories';
 import {
   brands,
   conditionPart,
@@ -22,8 +22,8 @@ import classes from './Portal.module.scss';
 import Search from '../search/search.comp';
 
 const Portal = () => {
-  const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
   const [brand, setBrand] = useState('');
+  const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
   const [model, setModel] = useState('');
   const [year, setYear] = useState('');
   const [condition, setCondition] = useState('');
@@ -35,20 +35,44 @@ const Portal = () => {
   const [color, setColor] = useState('');
   const [fuelType, setFuelType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCat, setSelectedCat] = useState('');
+  const [subCategories, setSubCategories] = useState<DataModal[] | never[]>([]);
+  const [slctSubCateg, setSlctSubCateg] = useState('');
+  const [partNamesOptions, setPartNamesOptions] = useState<
+    DataModal[] | never[]
+  >([]);
+  const [selectedPart, setSelectedPart] = useState('');
 
+  // sets options with selected brand models
   useEffect(() => {
     if (brand) {
-      let indexTest = 0;
-      brands.options.filter((item: Brand, index: number) =>
-        item.id === brand ? (indexTest = index) : null
+      let index = 0;
+      brands.options.filter((item: Brand, i: number) =>
+        item.id === brand ? (index = i) : null
       );
-      let options = brands.options[indexTest].models.map((item) => {
-        const option = { title: item.model, id: item.id };
-        return option;
-      });
+      const options = brands.options[index].models.map((item) => ({
+        title: item.model,
+        id: item.id,
+      }));
       setModelsOptions(options);
     }
   }, [brand]);
+
+  // sets SubCategory options when Category is selected
+  useEffect(() => {
+    if (selectedCat) {
+      let subCat = mockState.filter((item) => item.id === selectedCat);
+      setSubCategories(subCat[0].subOptions);
+    }
+  }, [selectedCat]);
+
+  // sets Part name options when SubCategory is selected
+  useEffect(() => {
+    if (slctSubCateg) {
+      let partName = subCategories.filter((item) => item.id === slctSubCateg);
+      setPartNamesOptions(partName[0].subOptions);
+    }
+  }, [slctSubCateg]);
 
   const setYears = () => {
     const date = new Date();
@@ -92,6 +116,21 @@ const Portal = () => {
           <Search
             label={'Detalės pavadinimo paiešką'}
             setSearchQuery={setSearchQuery}
+          />
+          <SelectComp
+            options={mockState}
+            label={'Kategorija'}
+            handler={setSelectedCat}
+          />
+          <SelectComp
+            options={subCategories}
+            label={'Subkategorija'}
+            handler={setSlctSubCateg}
+          />
+          <SelectComp
+            options={partNamesOptions}
+            label={'Pavadinimas'}
+            handler={setSelectedPart}
           />
           <SelectComp
             options={conditionPart.option}
