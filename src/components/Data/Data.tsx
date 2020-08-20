@@ -15,37 +15,18 @@ export interface ModelInterface {
   id: string;
 }
 
-export const brands = {
-  id: 'brands',
-  title: 'Gamintojas',
-  option: [
-    {
-      id: 'noneID',
-      title: '-',
-      models: [],
-    },
-    {
-      id: 'bmwId',
-      title: 'BMW',
-      models: [
-        { title: '---', id: 'nodeID' },
-        { title: 'X5', id: 'x5Id' },
-        { title: 'X3', id: 'x3Id' },
-        { title: '530', id: '530Id' },
-      ],
-    },
-    {
-      id: 'audiId',
-      title: 'Audi',
-      models: [
-        { title: '---', id: 'nodeID' },
-        { title: '100', id: '100Id' },
-        { title: '80', id: '80Id' },
-        { title: 'R8', id: 'r8Id' },
-      ],
-    },
-  ],
-};
+export interface EngineType {
+  title: string;
+  engPower: string;
+  engCapacity: number;
+  fuel: string;
+  year: number[] | number;
+}
+
+export interface ModelType {
+  model: string;
+  engines: EngineType[];
+}
 
 export const category = {
   title: 'Kategorija',
@@ -141,7 +122,7 @@ export const partName = {
 
 //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< Engine >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-const bmwX5Engines = {
+const bmwX5Engines: ModelType = {
   model: 'X5',
   engines: [
     {
@@ -168,7 +149,7 @@ const bmwX5Engines = {
   ],
 };
 
-const bmwX3Engines = {
+const bmwX3Engines: ModelType = {
   model: 'X3',
   engines: [
     {
@@ -342,5 +323,39 @@ export const fuel = {
     { title: 'Dyzelinas/Elektra', id: 'diesel_electricity' },
     { title: 'Bioetanolis', id: 'bioethanol' },
     { title: 'Kita', id: 'other' },
+  ],
+};
+
+export const brands = {
+  id: 'brands',
+  title: 'Gamintojas',
+  options: [
+    // {
+    //   id: 'noneID',
+    //   title: '-',
+    //   models: [],
+    // },
+    {
+      id: 'bmwId',
+      title: 'BMW',
+      models: [
+        // { title: '---', id: 'nodeID' },
+        // { title: 'X5', id: 'x5Id' },
+        // { title: 'X3', id: 'x3Id' },
+        // { title: '530', id: '530Id' },
+        bmwX3Engines,
+        bmwX5Engines,
+      ],
+    },
+    {
+      id: 'audiId',
+      title: 'Audi',
+      models: [
+        { title: '---', id: 'nodeID' },
+        { title: '100', id: '100Id' },
+        { title: '80', id: '80Id' },
+        { title: 'R8', id: 'r8Id' },
+      ],
+    },
   ],
 };

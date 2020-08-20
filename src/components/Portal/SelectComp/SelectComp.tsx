@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface CustomSelectPropsInterface {
   label: string;
-  optionsArray: Option[];
+  options: Option[];
   handler: Function;
 }
 
@@ -18,9 +18,9 @@ const SelectComp: Function = (props: CustomSelectPropsInterface) => {
         }
       >
         <option value={0}>----</option>
-        {props.optionsArray.map((option: Option) => {
+        {props.options.map((option: Option) => {
           return (
-            <option value={option.title} key={option.id}>
+            <option value={option.id} key={option.id}>
               {option.title}
             </option>
           );
