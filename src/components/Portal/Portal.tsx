@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import testas from '../../img/testas.png';
+import React, { useState, useEffect } from "react";
+import testas from "../../img/testas.png";
 
-import SelectOptions from './SelectOptions/SelectOptions';
-import SelectUserInput from '../SelectUserInput/SelectUserInput.comp';
+import SelectOptions from "./SelectOptions/SelectOptions";
+import SelectUserInput from "../SelectUserInput/SelectUserInput.comp";
 
 import {
   brands,
@@ -18,18 +18,19 @@ import {
   colorPart,
   fuel,
   ModelType,
-} from '../Data/Data';
+} from "../Data/Data";
 
-import classes from './Portal.module.scss';
-import SelectComp from './SelectComp/SelectComp';
+import classes from "./Portal.module.scss";
+import SelectComp from "./SelectComp/SelectComp";
+import SelectInput from "./SelectInput/SelectInput";
 
 const Portal = () => {
   const [models, setModelsOptions] = useState([
-    { title: '----', id: 'noneID' },
+    { title: "----", id: "noneID" },
   ]);
-  const [brand, setBrand] = useState('');
+  const [brand, setBrand] = useState("");
   const [model, setModel] = useState<ModelType | never[]>([]);
-  const [year, setYear] = useState('');
+  const [year, setYear] = useState("");
 
   console.log(brand);
 
@@ -37,8 +38,10 @@ const Portal = () => {
     if (!!brand) {
       console.log(brands);
       let indexTest = 0;
-      let value = brands.options.filter((item: any, index: number) => item.id === brand ? index : null);
-      let testA = brands.options[indexTest].models  
+      let value = brands.options.filter((item: any, index: number) =>
+        item.id === brand ? index : null
+      );
+      let testA = brands.options[indexTest].models;
       // setModel();
       let testB = testA[0];
       // console.log(testB.model as ModelType);
@@ -96,6 +99,11 @@ const Portal = () => {
   //       console.log('Pasirinkite marke');
   //   }
   // };
+  // const getValidation =() =>{
+  //   if(String !== typeof Number){
+  //     console.log('veikia');
+  //   }
+  // }
 
   return (
     <div className={classes.Div}>
@@ -104,9 +112,9 @@ const Portal = () => {
 
         <ul className={classes.ListStyle}>
           <li className={classes.formGroup}>
-            <label htmlFor='select auto'> Pasirinkti automobilį</label>
-            <select name='' id=''>
-              <option value=''>123</option>
+            <label htmlFor="select auto"> Pasirinkti automobilį</label>
+            <select name="" id="">
+              <option value="">123</option>
             </select>
 
             <button>PRIDĖTI AUTOMOBILĮ</button>
@@ -116,7 +124,7 @@ const Portal = () => {
           <SelectComp
             options={brands.options}
             handler={setBrand}
-            label={'Gamintojas'}
+            label={"Gamintojas"}
           />
 
           {/* <SelectComp /> */}
@@ -142,7 +150,7 @@ const Portal = () => {
 
           <SelectComp
             options={getYearsModel()}
-            label={'Metai'}
+            label={"Metai"}
             handler={setYear}
           />
 
@@ -208,46 +216,33 @@ const Portal = () => {
         <ul className={classes.ListStyle}>
           <SelectComp options={gearBox.option} label={gearBox.title} />
           <SelectComp options={colorPart.option} label={colorPart.title} />
-          <li className={classes.formGroup}>
-            <label htmlFor='odometer'>Rida </label>
-            <input type='text' />
-          </li>
+          <SelectInput title={"Rida"}/>
           <SelectComp options={fuel.option} label={fuel.title} />
           <li className={classes.formGroup}>
-            <label htmlFor='engine capacity'>Variklio talpa</label>
-            <select name='' id=''>
-              <option value=''>5</option>
+            <label htmlFor="engine capacity">Variklio talpa</label>
+            <select name="" id="">
+              <option value="">5</option>
             </select>
           </li>
           <li className={classes.formGroup}>
-            <label htmlFor='engine power'>Variklio galia</label>
-            <select name='' id=''>
-              <option value=''>6</option>
+            <label htmlFor="engine power">Variklio galia</label>
+            <select name="" id="">
+              <option value="">6</option>
             </select>
           </li>
-          <li className={classes.formGroup}>
-            <label htmlFor='lenght'>Ilgis ,cm</label>
-            <input type='text' />
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor='width'>Plotis, cm</label>
-            <input type='text' />
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor='height'>Aukštis, cm</label>
-            <input type='text' />
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor='weight'> Svoris, kg</label>
-            <input type='text' />
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor='price'>Kaina</label>
-            <input type='text' />
-          </li>
+
+          <SelectInput title={"Ilgis, cm"} />
+
+          <SelectInput title={"Plotis, cm"} />
+
+          <SelectInput title={"Aukštis, cm"} />
+
+          <SelectInput title={"Svoris,kg"} />
+
+          <SelectInput title={"Kaina"} />
         </ul>
         <p>Aprašymas</p>
-        <textarea name=''></textarea>
+        <textarea name=""></textarea>
       </div>
 
       {/* Image */}
