@@ -216,7 +216,7 @@ const Portal = () => {
         <ul className={classes.ListStyle}>
           <SelectComp options={gearBox.option} label={gearBox.title} />
           <SelectComp options={colorPart.option} label={colorPart.title} />
-          <SelectInput title={"Rida"}/>
+          <SelectInput title={"Rida"} onlyNumbers={false}/>
           <SelectComp options={fuel.option} label={fuel.title} />
           <li className={classes.formGroup}>
             <label htmlFor="engine capacity">Variklio talpa</label>
