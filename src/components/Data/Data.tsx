@@ -1,18 +1,7 @@
-export interface CarCollectByBrand {
+export interface Brand {
   id: string;
   title: string;
-  option: OptionInterface[];
-}
-
-export interface OptionInterface {
-  id: string;
-  title: string;
-  models: ModelInterface[];
-}
-
-export interface ModelInterface {
-  title: string;
-  id: string;
+  models: ModelType[];
 }
 
 export interface EngineType {
@@ -25,6 +14,7 @@ export interface EngineType {
 
 export interface ModelType {
   model: string;
+  id: string;
   engines: EngineType[];
 }
 
@@ -124,6 +114,7 @@ export const partName = {
 
 const bmwX5Engines: ModelType = {
   model: 'X5',
+  id: 'bmw-x5',
   engines: [
     {
       title: 'xDrive 3.0d 180kW',
@@ -151,6 +142,7 @@ const bmwX5Engines: ModelType = {
 
 const bmwX3Engines: ModelType = {
   model: 'X3',
+  id: 'bmw-x3',
   engines: [
     {
       title: 'xDrive 1.8d 100kW',
@@ -169,8 +161,9 @@ const bmwX3Engines: ModelType = {
   ],
 };
 
-const audi100Engines = {
+const audi100Engines: ModelType = {
   model: '100',
+  id: 'audi-100',
   engines: [
     {
       title: '1.8i 55kW',
@@ -189,8 +182,9 @@ const audi100Engines = {
   ],
 };
 
-const audi80Engines = {
+const audi80Engines: ModelType = {
   model: '80',
+  id: 'audi-80',
   engines: [
     {
       title: '1.5i 45kW',
@@ -209,8 +203,9 @@ const audi80Engines = {
   ],
 };
 
-const audiR8Engines = {
+const audiR8Engines: ModelType = {
   model: 'R8',
+  id: 'audi-r8',
   engines: [
     {
       title: '4.2 FSI quattro 316kW',
@@ -277,7 +272,7 @@ export const steeringWheelPosition = {
   ],
 };
 
-export const steeringWheel = {
+export const drivenWheel = {
   title: 'Varomieji ratai',
   option: [
     { title: 'Priekiniai', id: 'front' },
@@ -287,9 +282,9 @@ export const steeringWheel = {
 };
 
 export const gearBox = {
-  title: 'titlearų dežė',
+  title: 'Pavarų dežė',
   option: [
-    { title: 'Automatine', id: 'automatic' },
+    { title: 'Automatinė', id: 'automatic' },
     { title: 'Mechaninė', id: 'manual' },
   ],
 };
@@ -316,7 +311,7 @@ export const fuel = {
   title: 'Kuro tipas',
   option: [
     { title: 'Dyzelinas', id: 'diesel' },
-    { title: 'Benzinas', id: 'gasonile' },
+    { title: 'Benzinas', id: 'gasoline' },
     { title: 'Benzinas/Dujos', id: 'gasoline_gas' },
     { title: 'Benzinas/Elektra', id: 'gasoline_electricity' },
     { title: 'Elektra', id: 'electriciry' },
@@ -330,32 +325,15 @@ export const brands = {
   id: 'brands',
   title: 'Gamintojas',
   options: [
-    // {
-    //   id: 'noneID',
-    //   title: '-',
-    //   models: [],
-    // },
     {
       id: 'bmwId',
       title: 'BMW',
-      models: [
-        // { title: '---', id: 'nodeID' },
-        // { title: 'X5', id: 'x5Id' },
-        // { title: 'X3', id: 'x3Id' },
-        // { title: '530', id: '530Id' },
-        bmwX3Engines,
-        bmwX5Engines,
-      ],
+      models: [bmwX3Engines, bmwX5Engines],
     },
     {
       id: 'audiId',
       title: 'Audi',
-      models: [
-        { title: '---', id: 'nodeID' },
-        { title: '100', id: '100Id' },
-        { title: '80', id: '80Id' },
-        { title: 'R8', id: 'r8Id' },
-      ],
+      models: [audi100Engines, audi80Engines, audiR8Engines],
     },
   ],
 };
