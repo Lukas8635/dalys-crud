@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SelectComp, { Option } from './SelectComp/SelectComp';
 import SelectUserInput from '../SelectUserInput/SelectUserInput.comp';
 
+import { mockState } from '../../store/categories';
 import {
   brands,
   conditionPart,
@@ -18,6 +19,7 @@ import {
 
 import testas from '../../img/testas.png';
 import classes from './Portal.module.scss';
+import Search from '../search/search.comp';
 
 const Portal = () => {
   const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
@@ -32,6 +34,7 @@ const Portal = () => {
   const [gearBx, setGearBx] = useState('');
   const [color, setColor] = useState('');
   const [fuelType, setFuelType] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     if (brand) {
@@ -86,6 +89,10 @@ const Portal = () => {
             handler={setModel}
           />
           <SelectComp options={setYears()} label={'Metai'} handler={setYear} />
+          <Search
+            label={'Detalės pavadinimo paiešką'}
+            setSearchQuery={setSearchQuery}
+          />
           <SelectComp
             options={conditionPart.option}
             label={conditionPart.title}
