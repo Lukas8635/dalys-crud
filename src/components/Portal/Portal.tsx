@@ -62,7 +62,15 @@ const Portal = () => {
   useEffect(() => {
     if (selectedCat) {
       let subCat = mockState.filter((item) => item.id === selectedCat);
-      setSubCategories(subCat[0].subOptions);
+      if (subCat.length) {
+        setSubCategories(subCat[0].subOptions);
+        setPartNamesOptions([]);
+      } else {
+        // clears options for SubCategory and Part Names
+         setSubCategories([]);
+         setPartNamesOptions([]);
+      }
+
     }
   }, [selectedCat]);
 
@@ -70,7 +78,9 @@ const Portal = () => {
   useEffect(() => {
     if (slctSubCateg) {
       let partName = subCategories.filter((item) => item.id === slctSubCateg);
-      setPartNamesOptions(partName[0].subOptions);
+      return partName.length
+        ? setPartNamesOptions(partName[0].subOptions)
+        : setPartNamesOptions([]);
     }
   }, [slctSubCateg]);
 
@@ -89,7 +99,7 @@ const Portal = () => {
   };
 
   return (
-    <div className={classes.Div}>
+    <div className={classes.portal}>
       <div className={classes.SubDiv}>
         <h3>PRIDĖTI DETALĘ</h3>
 
@@ -222,13 +232,13 @@ const Portal = () => {
 
       {/* Image */}
 
-      {/* <div className={classes.SubDiv}>
+      <div className={classes.SubDiv}>
         <p>Pridėti nuotraukas:</p>
         <div>
           <img src={testas} alt='nuotrauka' />
         </div>
         <button>PRIDETI</button>
-      </div> */}
+      </div>
     </div>
   );
 };
