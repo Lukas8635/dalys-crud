@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classes from './Upload.module.scss';
 
-const Upload = () => {
-  const [files, setFiles] = useState<string[]>([]);
+interface Props {
+  files: string[] | never[];
+  handler: (file: FileList) => void;
+}
 
-  const handleChange = (file: FileList | null) => {
-    if (!file?.length) {
-      return;
-    }
-    const newState = [...files];
-    newState.push(URL.createObjectURL(file[0]));
-    setFiles(newState);
-  };
-
+const Upload: React.FC<Props> = ({ files, handler }) => {
   return (
     <div className={classes.upload}>
       <div className={classes.header}>
@@ -21,12 +15,12 @@ const Upload = () => {
         <input
           type='file'
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handleChange(e.target.files)
+            handler(e.target.files as FileList)
           }
         />
       </div>
       <div>
-        {files.map((img, i) => {
+        {(files as string[]).map((img, i) => {
           console.log(img);
           return (
             <div className={classes.imagesContainer} key={i}>

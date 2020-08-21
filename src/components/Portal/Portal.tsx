@@ -24,19 +24,19 @@ import testas from '../../img/testas.png';
 import classes from './Portal.module.scss';
 
 const Portal = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const [brand, setBrand] = useState('');
   const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
   const [model, setModel] = useState('');
   const [year, setYear] = useState('');
   const [condition, setCondition] = useState('');
-  const [partContidion, setPartContidion] = useState('');
+  const [partCondition, setPartCondition] = useState('');
   const [carBodyType, setCarBodyType] = useState('');
   const [wheelPosition, setWheelPosition] = useState('');
   const [drivenWhl, setDrivenWhl] = useState('');
-  const [gearBx, setGearBx] = useState('');
+  const [transmission, setTransmission] = useState('');
   const [color, setColor] = useState('');
   const [fuelType, setFuelType] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCat, setSelectedCat] = useState('');
   const [subCategories, setSubCategories] = useState<DataModal[] | never[]>([]);
   const [slctSubCateg, setSlctSubCateg] = useState('');
@@ -44,6 +44,51 @@ const Portal = () => {
     DataModal[] | never[]
   >([]);
   const [selectedPart, setSelectedPart] = useState('');
+  // Uploaded images
+  const [files, setFiles] = useState<string[]>([]);
+
+  const createData = () => {
+    //  SKU code. This code must be created dynamically
+    const productCode = 'gir458';
+    return {
+      productCode: productCode,
+      category: selectedCat,
+      subCategory: slctSubCateg,
+      codes: ['TODO: test, change this'],
+      car: {
+        make: brand,
+        model: model,
+        engine: 'V8',
+        engineCapacity: 5000,
+        enginePower: {
+          kW: 260,
+          hp: 349,
+        },
+        fuel: fuelType,
+        carProductionYear: year,
+        steeringWheelPosition: wheelPosition,
+        transmission: transmission,
+        bodyTape: carBodyType,
+        drivingWheels: drivenWhl,
+        carColor: color,
+      },
+      name: 'String',
+      position: partCondition,
+      priceWithoutVAT: 100,
+      price: 121,
+      photoUrls: [...files],
+      condition: condition,
+      status: 'available',
+      odometer: 50000,
+      dimensions: {
+        length: 220,
+        width: 120,
+        height: 120,
+        weight: 400,
+        price: 6000,
+      },
+    };
+  };
 
   // sets options with selected brand models
   useEffect(() => {
@@ -110,20 +155,29 @@ const Portal = () => {
     return yearsArray;
   };
 
+  const handleImgUpload = (file: FileList) => {
+    if (!file?.length) {
+      return;
+    }
+    const newState = [...files];
+    newState.push(URL.createObjectURL(file[0]));
+    setFiles(newState);
+  };
+
   return (
     <div className={classes.portal}>
-      <div className={classes.SubDiv}>
+      <div className={classes.subDiv}>
         <h3>PRIDĖTI DETALĘ</h3>
 
-        <ul className={classes.listStyle}>
-          <li className={classes.formGroup}>
+        <form className={classes.listStyle}>
+          <div className={classes.formGroup}>
             <label htmlFor='select auto'> Pasirinkti automobilį</label>
             <select name='' id=''>
-              <option value=''>123</option>
+              <option value=''>Neturiu ardomo automobilio</option>
             </select>
 
             <button>PRIDĖTI AUTOMOBILĮ</button>
-          </li>
+          </div>
           <SelectComp
             options={brands.options}
             handler={setBrand}
@@ -162,7 +216,7 @@ const Portal = () => {
           <SelectComp
             options={positionPart.option}
             label={positionPart.title}
-            handler={setPartContidion}
+            handler={setPartCondition}
           />
           <SelectComp
             options={bodyType.option}
@@ -179,74 +233,74 @@ const Portal = () => {
             label={drivenWheel.title}
             handler={setDrivenWhl}
           />
-        </ul>
+        </form>
         <p>Detalės kodas</p>
         <input></input>
         <p>Pridėti papildomų kodų (click)</p>
       </div>
-      <div className={classes.SubDiv}>
-        <ul className={classes.listStyle}>
+      <div className={classes.subDiv}>
+        <div className={classes.listStyle}>
           <SelectComp
             options={gearBox.option}
             label={gearBox.title}
-            handler={setGearBx}
+            handler={setTransmission}
           />
           <SelectComp
             options={colorPart.option}
             label={colorPart.title}
             handler={setColor}
           />
-          <li className={classes.formGroup}>
+          <div className={classes.formGroup}>
             <label htmlFor='odometer'>Rida </label>
             <input className={classes.input} type='text' />
-          </li>
+          </div>
           <SelectComp
             options={fuel.option}
             label={fuel.title}
             handler={setFuelType}
           />
-          <li className={classes.formGroup}>
+          <div className={classes.formGroup}>
             <label htmlFor='engine capacity'>Variklio talpa</label>
             <select name='' id=''>
               <option value=''>5</option>
             </select>
-          </li>
-          <li className={classes.formGroup}>
+          </div>
+          <div className={classes.formGroup}>
             <label htmlFor='engine power'>Variklio galia</label>
             <select name='' id=''>
               <option value=''>6</option>
             </select>
-          </li>
-          <li className={classes.formGroup}>
+          </div>
+          <div className={classes.formGroup}>
             <label htmlFor='lenght'>Ilgis ,cm</label>
             <input className={classes.input} type='text' />
-          </li>
-          <li className={classes.formGroup}>
+          </div>
+          <div className={classes.formGroup}>
             <label htmlFor='width'>Plotis, cm</label>
             <input className={classes.input} type='text' />
-          </li>
-          <li className={classes.formGroup}>
+          </div>
+          <div className={classes.formGroup}>
             <label htmlFor='height'>Aukštis, cm</label>
             <input className={classes.input} type='text' />
-          </li>
-          <li className={classes.formGroup}>
+          </div>
+          <div className={classes.formGroup}>
             <label htmlFor='weight'> Svoris, kg</label>
             <input className={classes.input} type='text' />
-          </li>
-          <li className={classes.formGroup}>
+          </div>
+          <div className={classes.formGroup}>
             <label htmlFor='price'>Kaina</label>
             <input className={classes.input} type='text' />
-          </li>
-        </ul>
+          </div>
+        </div>
         <p>Aprašymas</p>
         <textarea name=''></textarea>
       </div>
 
       {/* Image */}
 
-      <Upload />
+      <Upload files={files} handler={handleImgUpload} />
 
-      {/* <div className={classes.SubDiv}>
+      {/* <div className={classes.subDiv}>
         <p>Pridėti nuotraukas:</p>
         <div>
           <img src={testas} alt='nuotrauka' />
