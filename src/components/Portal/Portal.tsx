@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import SelectComp, { Option } from './SelectComp/SelectComp';
 import SelectUserInput from '../SelectUserInput/SelectUserInput.comp';
+import Search from '../Search/Search.comp';
+import Upload from '../Upload/Upload.comp';
 
 import { mockState, DataModal } from '../../store/categories';
 import {
@@ -15,11 +17,11 @@ import {
   colorPart,
   fuel,
   Brand,
+  ModelType,
 } from '../Data/Data';
 
 import testas from '../../img/testas.png';
 import classes from './Portal.module.scss';
-import Search from '../search/search.comp';
 
 const Portal = () => {
   const [brand, setBrand] = useState('');
@@ -45,39 +47,49 @@ const Portal = () => {
 
   // sets options with selected brand models
   useEffect(() => {
-    if (brand) {
+    if (brand && brand !== '0') {
       let index = 0;
+      // finds selected brand
       brands.options.filter((item: Brand, i: number) =>
         item.id === brand ? (index = i) : null
       );
-      const options = brands.options[index].models.map((item) => ({
-        title: item.model,
-        id: item.id,
-      }));
+      // gets selected brands models and creates array of options
+      const options: Option[] = brands.options[index].models.map(
+        (item: ModelType) => ({
+          title: item.model,
+          id: item.id,
+        })
+      );
       setModelsOptions(options);
+    } else {
+      // if none brand selected (----) sets models options to empty array
+      setModelsOptions([]);
     }
   }, [brand]);
 
   // sets SubCategory options when Category is selected
   useEffect(() => {
     if (selectedCat) {
-      let subCat = mockState.filter((item) => item.id === selectedCat);
+      let subCat: DataModal[] = mockState.filter(
+        (item: DataModal) => item.id === selectedCat
+      );
       if (subCat.length) {
         setSubCategories(subCat[0].subOptions);
         setPartNamesOptions([]);
       } else {
         // clears options for SubCategory and Part Names
-         setSubCategories([]);
-         setPartNamesOptions([]);
+        setSubCategories([]);
+        setPartNamesOptions([]);
       }
-
     }
   }, [selectedCat]);
 
   // sets Part name options when SubCategory is selected
   useEffect(() => {
     if (slctSubCateg) {
-      let partName = subCategories.filter((item) => item.id === slctSubCateg);
+      let partName: DataModal[] = subCategories.filter(
+        (item: DataModal) => item.id === slctSubCateg
+      );
       return partName.length
         ? setPartNamesOptions(partName[0].subOptions)
         : setPartNamesOptions([]);
@@ -103,7 +115,7 @@ const Portal = () => {
       <div className={classes.SubDiv}>
         <h3>PRIDĖTI DETALĘ</h3>
 
-        <ul className={classes.ListStyle}>
+        <ul className={classes.listStyle}>
           <li className={classes.formGroup}>
             <label htmlFor='select auto'> Pasirinkti automobilį</label>
             <select name='' id=''>
@@ -173,7 +185,7 @@ const Portal = () => {
         <p>Pridėti papildomų kodų (click)</p>
       </div>
       <div className={classes.SubDiv}>
-        <ul className={classes.ListStyle}>
+        <ul className={classes.listStyle}>
           <SelectComp
             options={gearBox.option}
             label={gearBox.title}
@@ -232,13 +244,15 @@ const Portal = () => {
 
       {/* Image */}
 
-      <div className={classes.SubDiv}>
+      <Upload />
+
+      {/* <div className={classes.SubDiv}>
         <p>Pridėti nuotraukas:</p>
         <div>
           <img src={testas} alt='nuotrauka' />
         </div>
         <button>PRIDETI</button>
-      </div>
+      </div> */}
     </div>
   );
 };

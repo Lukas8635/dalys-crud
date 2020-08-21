@@ -16,9 +16,9 @@ export interface Option {
 const SelectComp: React.FC<Props> = ({ label, options, handler }) => {
   return (
     <div className={classes.formGroup}>
-      <label htmlFor='as'>{label}</label>
-      <select 
-      className={classes.select}
+      <label htmlFor=''>{label}</label>
+      <select
+        className={classes.select}
         onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
           handler((event.target as HTMLSelectElement).value)
         }
