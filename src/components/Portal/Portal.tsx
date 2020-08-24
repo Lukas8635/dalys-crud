@@ -23,6 +23,7 @@ import {
 import classes from "./Portal.module.scss";
 import SelectComp from "./SelectComp/SelectComp";
 import SelectInput from "./SelectInput/SelectInput";
+import CodeInput from "./PartCodeAdd/CodeInput";
 
 const Portal = () => {
   const [models, setModelsOptions] = useState([
@@ -31,8 +32,6 @@ const Portal = () => {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState<ModelType | never[]>([]);
   const [year, setYear] = useState("");
-
-  console.log(brand);
 
   useEffect(() => {
     if (!!brand) {
@@ -59,12 +58,6 @@ const Portal = () => {
   // ): { [key:string]: typeof value } => ({ [key]: value });
 
   // test method, to log values.
-
-  const getModelOptions = (value: string, brands: CarCollectByBrand) => {
-    brands.option.map((item: OptionInterface) =>
-      item.title === value ? setModelsOptions(item.models) : null
-    );
-  };
 
   const getYearsModel = () => {
     const date = new Date();
@@ -175,48 +168,15 @@ const Portal = () => {
             options={steeringWheel.option}
             label={steeringWheel.title}
           />
-          {/*
-          <SelectInput title={partNameSearch.title}/>
-          <SelectComponent
-            id={category.id}
-            onChange={handleInput}
-            keyDB={category.title}
-            title={category.title}
-            option={category.option}
-          />
-          <SelectComponent
-            id={subCategory.id}
-            onChange={handleInput}
-            keyDB={subCategory.title}
-            title={subCategory.title}
-            option={subCategory.option}
-          />
-          <SelectInput title={partName.title}/>
-          <SelectComponent
-            id={condition.id}
-            onChange={handleInput}
-            keyDB={condition.title}
-            title={condition.title}
-            option={condition.option}
-          />
-          <SelectComponent
-            id={position.id}
-            onChange={handleInput}
-            keyDB={position.title}
-            title={position.title}
-            option={position.option}
-          /> */}
         </ul>
-        <p>Detalės kodas</p>
-        <input></input>
-        <p>Pridėti papildomų kodų (click)</p>
+        <CodeInput  />
       </div>
 
       <div className={classes.SubDiv}>
         <ul className={classes.ListStyle}>
           <SelectComp options={gearBox.option} label={gearBox.title} />
           <SelectComp options={colorPart.option} label={colorPart.title} />
-          <SelectInput title={"Rida"} onlyNumbers={false}/>
+          <SelectInput title={"Rida"} />
           <SelectComp options={fuel.option} label={fuel.title} />
           <li className={classes.formGroup}>
             <label htmlFor="engine capacity">Variklio talpa</label>
