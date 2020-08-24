@@ -1,24 +1,31 @@
 import React from 'react';
 
-export interface CustomSelectPropsInterface {
+import classes from './SelectComp.module.scss';
+
+interface Props {
   label: string;
   options: Option[];
   handler: Function;
+  required?:boolean;
 }
 
-type Option = { title: string; id: string };
+export interface Option {
+  title: string;
+  id: string;
+}
 
-const SelectComp: Function = (props: CustomSelectPropsInterface) => {
+const SelectComp: React.FC<Props> = ({ label, options, handler }) => {
   return (
-    <div>
-      <label htmlFor='as'>{props.label}</label>
+    <div className={classes.formGroup}>
+      <label htmlFor=''>{label}</label>
       <select
+        className={classes.select}
         onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-          props.handler((event.target as HTMLSelectElement).value)
+          handler((event.target as HTMLSelectElement).value)
         }
       >
         <option value={0}>----</option>
-        {props.options.map((option: Option) => {
+        {options.map((option: Option) => {
           return (
             <option value={option.id} key={option.id}>
               {option.title}

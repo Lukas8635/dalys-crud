@@ -1,16 +1,20 @@
-
-.DivMain {
+.portal {
     display: flex;
-
+    align-items: flex-start;
+    justify-items: center;
+    width: 65%;
+    margin: auto;
+    margin-top: 5rem;
 }
 
-.SubDiv{
+.subDiv{
     flex: 1;
     display: inline-block;
-    width: 20%;
+    // width: 20%;
+    margin: 0 1rem
 }
 
-.ListStyle{
+.listStyle{
     list-style: none;
 }
 
@@ -18,4 +22,8 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;    
+}
+
+.input {
+    width: 100%;
 }

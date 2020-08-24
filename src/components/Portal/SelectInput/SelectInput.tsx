@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import classes from "./test.module.scss";
+import classes from "./SelectInput.module.scss";
 
 interface SelectInputInterface {
   title: string;
   onlyNumbers?: boolean;
+  required?: boolean;
 }
 
 const SelectInput = (
@@ -23,9 +24,9 @@ const SelectInput = (
   // }
 
   return (
-    <li>
-      <label htmlFor="nzn">{props.title}</label>
-      <input
+    <li className={classes.formGroup}>
+      <label htmlFor="#">{props.title}</label>
+      <input className={classes.input}
         type="text"
         onChange={numberValidation}
         maxLength={7}

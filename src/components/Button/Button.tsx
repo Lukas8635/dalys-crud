@@ -8,6 +8,8 @@ interface ButtonInterface {
     clicked?:((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
       | undefined;
     disabled?: boolean;
+    type?:string;
+    id?:number;
 
 }
 
