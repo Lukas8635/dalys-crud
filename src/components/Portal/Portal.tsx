@@ -21,7 +21,6 @@ import {
   dismantleCar,
 } from "../Data/Data";
 
-import testas from "../../img/testas.png";
 import classes from "./Portal.module.scss";
 import SelectInput from "./SelectInput/SelectInput";
 import CodeInput from "./PartCodeAdd/CodeInput";
@@ -169,23 +168,29 @@ const Portal = () => {
     setFiles(newState);
   };
 
-  // add event listener for MAIN BUTTON PRIDETI
-  const addEventListener = (required:boolean) =>{
-    if (required !== true){
-      console.log('veikia');
-    }
-  }
+  //check validation for required fields 
+//  const checkValidation = () =>{
+//    switch (false){
+//      case CodeInput.length > 1:
+//        console.log('Kodas tinkamas');
+//        break;
+//       case CodeInput.length < 1:
+//         console.log('Iveskite koda');
+//         break;
+      
+//    }
+//  }
 
   // const addEvenrListener = (id:number, (event:any)=>{
   //   event.preventDefault()
   // });
 
   return (
-    <div className={classes.portal}>
+    <form className={classes.portal}>
       <div className={classes.subDiv}>
         <h3>PRIDĖTI DETALĘ</h3>
 
-        <form className={classes.listStyle}>
+        <form className={classes.listStyle} >
           <div className={classes.formGroup}>
             <SelectComp
               options={dismantleCar.options}
@@ -196,7 +201,6 @@ const Portal = () => {
             <Button>PRIDĖTI AUTOMOBILĮ</Button>
           </div>
           <SelectComp
-            
             options={brands.options}
             handler={setBrand}
             label={"Gamintojas"}
@@ -212,25 +216,25 @@ const Portal = () => {
             setSearchQuery={setSearchQuery}
           />
           <SelectComp
-          required={true}
+            required={true}
             options={mockState}
             label={"Kategorija *"}
             handler={setSelectedCat}
           />
           <SelectComp
-          required={true}
+            required={true}
             options={subCategories}
             label={"Subkategorija *"}
             handler={setSlctSubCateg}
           />
           <SelectComp
-          required={true}
+            required={true}
             options={partNamesOptions}
             label={"Pavadinimas *"}
             handler={setSelectedPart}
           />
           <SelectComp
-          required={true}
+            required={true}
             options={conditionPart.option}
             label={conditionPart.title}
             handler={setCondition}
@@ -271,38 +275,33 @@ const Portal = () => {
             handler={setColor}
           />
           <div className={classes.formGroup}>
-            <SelectInput title={"Rida"} />
+            <SelectInput title={"Rida"} required={false} />
           </div>
           <SelectComp
             options={fuel.option}
             label={fuel.title}
             handler={setFuelType}
           />
-          <div className={classes.formGroup}>
+          {/* <div className={classes.formGroup}>
             <SelectInput title={"Variklio talpa"} />
           </div>
           <div className={classes.formGroup}>
             <SelectInput title={"Variklio galia"} />
+          </div> */}
+          <div className={classes.formGroup}>
+            <SelectInput title={"Ilgis cm *"} required={true} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Ilgis cm *"}
-            required={true} />
+            <SelectInput title={"Plotins cm *"} required={true} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Plotins cm *"}
-            required={true} />
+            <SelectInput title={"Aukštis, cm *"} required={true} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Aukštis, cm *"}
-            required={true} />
+            <SelectInput title={"Svoris, kg *"} required={true} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Svoris, kg *"}
-            required={true} />
-          </div>
-          <div className={classes.formGroup}>
-            <SelectInput title={"Kaina *"}
-            required={true} />
+            <SelectInput title={"Kaina *"} required={true} />
           </div>
         </div>
         <p>Aprašymas *</p>
@@ -313,10 +312,10 @@ const Portal = () => {
 
       <Upload files={files} handler={handleImgUpload} />
 
-      <Button id={1} type="submit" >
+      <Button id={1}  >
         Pridėti
       </Button>
-    </div>
+    </form >
   );
 };
 

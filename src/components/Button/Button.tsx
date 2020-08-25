@@ -10,6 +10,7 @@ interface ButtonInterface {
     disabled?: boolean;
     type?:string;
     id?:number;
+    onClick?:any;
 
 }
 

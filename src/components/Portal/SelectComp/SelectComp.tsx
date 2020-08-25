@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import classes from './SelectComp.module.scss';
+import classes from "./SelectComp.module.scss";
 
 interface Props {
   label: string;
   options: Option[];
   handler: Function;
-  required?:boolean;
+  required?: boolean;
 }
 
 export interface Option {
@@ -17,8 +17,9 @@ export interface Option {
 const SelectComp: React.FC<Props> = ({ label, options, handler }) => {
   return (
     <div className={classes.formGroup}>
-      <label htmlFor=''>{label}</label>
+      <label htmlFor="">{label}</label>
       <select
+        required={true}
         className={classes.select}
         onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
           handler((event.target as HTMLSelectElement).value)

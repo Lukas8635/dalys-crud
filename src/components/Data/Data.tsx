@@ -213,6 +213,7 @@ const audiR8Engines: ModelType = {
 
 export const conditionPart = {
   title: "Būklė*",
+  id:'condition1',
   required:true,
   option: [
     { title: "Nauja", id: "new" },

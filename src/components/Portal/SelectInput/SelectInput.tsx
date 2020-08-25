@@ -13,20 +13,20 @@ const SelectInput = (
 ) => {
   const [number, setNumber] = useState("");
 
+  //numbers validation for writing only numbers
   const numberValidation = (e: any) => {
     const re = /^[0-9\b]+$/;
     if (e.target.value === "" || re.test(e.target.value)) {
       setNumber(e.target.value);
     }
   };
-  // const handlerChange = (onlyNumbers)=>{
-
-  // }
 
   return (
     <li className={classes.formGroup}>
       <label htmlFor="#">{props.title}</label>
-      <input className={classes.input}
+      <input
+        // required={true}
+        className={classes.input}
         type="text"
         onChange={numberValidation}
         maxLength={7}
