@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classes from "./SelectInput.module.scss";
+import { register } from "../../../serviceWorker";
 
 interface SelectInputInterface {
   title: string;
@@ -12,25 +13,35 @@ const SelectInput = (
   onlyNumbers: true | false
 ) => {
   const [number, setNumber] = useState("");
+  const [isValid, setIsValid] = useState(true);
 
-  //numbers validation for writing only numbers
-  const numberValidation = (e: any) => {
-    const re = /^[0-9\b]+$/;
-    if (e.target.value === "" || re.test(e.target.value)) {
-      setNumber(e.target.value);
+  const checkValidation = (value: any, regEx: any) =>
+    value === "" || regEx.test(value) ? true : false;
+
+  //check validation for emtry strings
+  const checkStringValidation = (e: any) => {
+    if (e.target.value === "") {
+      console.log("irasykite skaiciu");
     }
+  };
+
+  const handleInput = (value: any) => {
+    const re = /^[0-9\b]+$/;
+    const isInputValid = checkValidation(value, re);
+    return isInputValid
+      ? (setIsValid(true), setNumber(value))
+      : setIsValid(false);
   };
 
   return (
     <li className={classes.formGroup}>
       <label htmlFor="#">{props.title}</label>
       <input
-        // required={true}
-        className={classes.input}
+        className={`${classes.input} ${isValid ? "" : classes.inValid}`}
         type="text"
-        onChange={numberValidation}
+        // onChange={(event)=> handleInput(event.target.value)}
+        onChange={(event) => handleInput(event.target.value)}
         maxLength={7}
-        value={number}
       ></input>
     </li>
   );

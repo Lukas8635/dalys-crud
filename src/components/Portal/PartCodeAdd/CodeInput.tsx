@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import classes from "./CodeInput.module.scss";
 
-interface InitialStateInterface {
+interface CodeInputDataInterface {
   partCode: string;
   name: string;
   id: string;
   value: string;
+  
 }
 
 const CodeInput = () => {
-  const initianState: InitialStateInterface = {
+  const codeInputData: CodeInputDataInterface = {
     partCode: "",
     name: "pirmas",
     id: "1",
     value: "",
+    
   };
-  const [inputList, setInputList] = useState<InitialStateInterface[]>([
-    initianState,
-  ]);
+  const [inputList, setInputList] = useState<CodeInputDataInterface[]>([codeInputData]);
   // handle input change
   const handleInputChange = (
     event: { target: { id: string; value: string } },
@@ -33,19 +33,13 @@ const CodeInput = () => {
     setInputList(list);
   };
 
-  const checkValid = () => {
-    if (initianState.value == ''){
-      console.log('irasyti koda');
-    }
-  }
-
   // handle click event of the 'Pridėti dar vieną kodą' button
   const handleAddClick = () => {
     setInputList((prevState) => {
       const date = new Date();
       const stateCopy = [...prevState];
       const newCodeItem = {
-        ...initianState,
+        ...codeInputData,
         id: date.getTime().toString(),
       };
       stateCopy.push(newCodeItem);
@@ -66,9 +60,7 @@ const CodeInput = () => {
       {inputList.map((x, id) => {
         return (
           <div className={classes.formGroup} key={id}>
-            <input
-            onClick={checkValid}
-              className={classes.input}
+            <input className={classes.input}
               maxLength={40}
               id={x.id}
               name="partCode"
@@ -76,9 +68,10 @@ const CodeInput = () => {
               onChange={(event) => handleInputChange(event, id)}
             ></input>
             <div>
+             
               {inputList.length !== 1 && (
-                <button
-                  className={classes.button}
+                <button className={classes.button}
+                  
                   onClick={() => handleRemoveClick(x.id)}
                 >
                   Pašalinti
