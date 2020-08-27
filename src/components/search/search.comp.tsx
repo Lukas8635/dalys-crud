@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './Search.module.scss';
+import classes from './search.module.scss';
 
 interface Props {
   label: string;

@@ -5,7 +5,7 @@ export interface DataModal {
 }
 
 const mockData = {
-  title: 'Galinis žibintas',
+  title: 'Galiniai žibintai',
   id: 'rear-0100',
   subOptions: [
     {
@@ -129,6 +129,91 @@ export const mockState: DataModal[] = [
   {
     title: 'Degalų mišinio sistema',
     id: 'ignition-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Dujų išmetimo sistema',
+    id: 'exhaust_gass-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Durys',
+    id: 'doors-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Galinė ašis',
+    id: 'rear_axis-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Galinės išorės detalės',
+    id: 'rear_out_parts-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Kėbulas/ kėbulo dalys ',
+    id: 'body-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Kitos detalės ',
+    id: 'other_parts-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Oro kondicionavimo- šildymo sistema/ radiatoriai ',
+    id: 'air_condition-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Pavarų dėžė/ sankaba/ transmisija ',
+    id: 'gear_box-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Priekinė ašis',
+    id: 'front_axis-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Priekinės išorės detalės',
+    id: 'fron_part-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Prietaisai/ jungikliai/ el. sistema ',
+    id: 'el_system-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Ratai/ padangos/ gaubtai ',
+    id: 'wheels-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Salonas/ interjeras ',
+    id: 'saloon-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Stabdžių sistema',
+    id: 'brake_system-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Stiklai',
+    id: 'glasses-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Stiklų žibintų apiplovimo/ valymo sistema',
+    id: 'headlight_washing_system-1',
+    subOptions: [mockData2],
+  },
+  {
+    title: 'Variklis',
+    id: 'engine-1',
     subOptions: [mockData2],
   },
 ];
