@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { addValue, addDimensions } from '../../store/actions/addPartActions';
 
 import SelectComp, { Option } from './SelectComp/SelectComp';
-
+import Input from './Input/Input.comp';
+import PartCodeForm from './PartCodeForm/PartCodeForm.comp';
+import Button from '../Button/Button';
 import Search from '../Search/Search.comp';
 import Upload from '../Upload/Upload.comp';
 
@@ -21,10 +26,6 @@ import {
   dismantleCar,
 } from '../Data/Data';
 
-import Input from './Input/Input.comp';
-import PartCodeForm from './PartCodeForm/PartCodeForm.comp';
-import Button from '../Button/Button';
-
 import classes from './Portal.module.scss';
 
 export type PartCode = { id: string; value: string };
@@ -32,6 +33,8 @@ export type PartCode = { id: string; value: string };
 const Portal = () => {
   // Regular expression used to check user input validation. It is passed to Input component at prop
   const regEx = /^[0-9\b]+$/;
+
+  const dispatch = useDispatch();
 
   const [dismantleCars, setDismantleCars] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -147,8 +150,9 @@ const Portal = () => {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };
-
-  // sets options with selected brand models
+  /**
+    sets options with selected brand models
+  */
   useEffect(() => {
     if (brand && brand !== '0') {
       let index = 0;
@@ -169,8 +173,9 @@ const Portal = () => {
       setModelsOptions([]);
     }
   }, [brand]);
-
-  // sets SubCategory options when Category is selected
+  /**
+    sets SubCategory options when Category is selected
+  */
   useEffect(() => {
     if (selectedCat) {
       let subCat: DataModal[] = mockState.filter(
@@ -186,8 +191,9 @@ const Portal = () => {
       }
     }
   }, [selectedCat]);
-
-  // sets Part name options when SubCategory is selected
+  /**
+     sets Part name options when SubCategory is selected
+   */
   useEffect(() => {
     if (slctSubCateg) {
       let partName: DataModal[] = subCategories.filter(
@@ -237,7 +243,14 @@ const Portal = () => {
 
             <Button>PRIDĖTI AUTOMOBILĮ</Button>
           </div>
-          <Input title={'Detalės pavadinimas'} setValue={setName} isRequired={true}/>
+          <Input
+            title={'Detalės pavadinimas'}
+            keyName={'partName'}
+            setValue={(name: string, value: string) =>
+              dispatch(addValue({ key: name, value: value }))
+            }
+            isRequired={true}
+          />
           <SelectComp
             options={brands.options}
             handler={setBrand}
@@ -313,7 +326,14 @@ const Portal = () => {
             handler={setColor}
           />
           <div className={classes.formGroup}>
-            <Input title={'Rida'} regExp={regEx} setValue={setMileage} />
+            <Input
+              title={'Rida'}
+              regExp={regEx}
+              keyName={'odometer'}
+              setValue={(name: string, value: string) =>
+                dispatch(addValue({ key: name, value: value }))
+              }
+            />
           </div>
           <SelectComp
             options={fuel.option}
@@ -325,7 +345,10 @@ const Portal = () => {
               title={'Variklio talpa'}
               regExp={regEx}
               maxLength={7}
-              setValue={setEngineCapacity}
+              keyName={'engineCapacity'}
+              setValue={(name: string, value: string) =>
+                dispatch(addValue({ key: name, value: value }))
+              }
             />
           </div>
           <div className={classes.formGroup}>
@@ -333,7 +356,10 @@ const Portal = () => {
               title={'Variklio galia'}
               regExp={regEx}
               maxLength={7}
-              setValue={setEnginePower}
+              keyName={'enginePower'}
+              setValue={(name: string, value: string) =>
+                dispatch(addValue({ key: name, value: value }))
+              }
             />
           </div>
           <div className={classes.formGroup}>
@@ -342,7 +368,10 @@ const Portal = () => {
               isRequired={true}
               regExp={regEx}
               maxLength={7}
-              setValue={setLenght}
+              keyName={'length'}
+              setValue={(name: string, value: string) =>
+                dispatch(addDimensions({ key: name, value: value }))
+              }
             />
           </div>
           <div className={classes.formGroup}>
@@ -351,7 +380,10 @@ const Portal = () => {
               isRequired={true}
               regExp={regEx}
               maxLength={7}
-              setValue={setWidth}
+              keyName={'width'}
+              setValue={(name: string, value: string) =>
+                dispatch(addDimensions({ key: name, value: value }))
+              }
             />
           </div>
           <div className={classes.formGroup}>
@@ -360,7 +392,10 @@ const Portal = () => {
               isRequired={true}
               regExp={regEx}
               maxLength={7}
-              setValue={setHeight}
+              keyName={'height'}
+              setValue={(name: string, value: string) =>
+                dispatch(addDimensions({ key: name, value: value }))
+              }
             />
           </div>
           <div className={classes.formGroup}>
@@ -369,7 +404,10 @@ const Portal = () => {
               isRequired={true}
               regExp={regEx}
               maxLength={7}
-              setValue={setWeight}
+              keyName={'weight'}
+              setValue={(name: string, value: string) =>
+                dispatch(addValue({ key: name, value: value }))
+              }
             />
           </div>
           <div className={classes.formGroup}>
@@ -378,7 +416,10 @@ const Portal = () => {
               isRequired={true}
               regExp={regEx}
               maxLength={7}
-              setValue={setPrice}
+              keyName={'price'}
+              setValue={(name: string, value: string) =>
+                dispatch(addValue({ key: name, value: value }))
+              }
             />
           </div>
         </div>

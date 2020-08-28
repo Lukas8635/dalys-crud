@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+
 import classes from './Input.module.scss';
 
 interface Props {
   title: string;
   setValue: Function;
+  keyName: string;
   isRequired?: boolean;
   regExp?: RegExp;
   maxLength?: number;
@@ -11,11 +13,13 @@ interface Props {
 
 const Input: React.FC<Props> = ({
   title,
+  keyName,
   setValue,
   isRequired,
   regExp,
   maxLength,
 }) => {
+
   const [isValid, setIsValid] = useState(true);
 
   const checkValidation = (value: string, regEx: RegExp) =>
@@ -27,7 +31,7 @@ const Input: React.FC<Props> = ({
       isInputValid = checkValidation(value, regExp);
     }
     return isInputValid
-      ? (setIsValid(true), setValue(value))
+      ? (setIsValid(true), setValue(keyName, value))
       : setIsValid(false);
   };
 
