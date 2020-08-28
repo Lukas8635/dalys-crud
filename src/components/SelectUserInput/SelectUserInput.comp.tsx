@@ -1,5 +1,7 @@
 import React from 'react';
 
+// TODO: Do this component are in use and needed somewhere?
+
 interface Props {
   title?: string;
   options: { title: string; id: string }[];

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import SelectComp, { Option } from "./SelectComp/SelectComp";
+import SelectComp, { Option } from './SelectComp/SelectComp';
 
-import Search from "../search/search.comp";
-import Upload from "../Upload/Upload.comp";
+import Search from '../Search/Search.comp';
+import Upload from '../Upload/Upload.comp';
 
-import { mockState, DataModal } from "../../store/categories";
+import { mockState, DataModal } from '../../store/categories';
 import {
   brands,
   conditionPart,
@@ -19,85 +19,98 @@ import {
   Brand,
   ModelType,
   dismantleCar,
-} from "../Data/Data";
+} from '../Data/Data';
 
-import testas from "../../img/testas.png";
-import classes from "./Portal.module.scss";
-import SelectInput from "./SelectInput/SelectInput";
-import CodeInput from "./PartCodeAdd/CodeInput";
-import Button from "../Button/Button";
+import classes from './Portal.module.scss';
+import Input from './Input/Input.comp';
+import CodeInput from './PartCodeAdd/CodeInput';
+import Button from '../Button/Button';
 
 const Portal = () => {
-  const [dismantleCars, setDismantleCars] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [brand, setBrand] = useState("");
+  const [dismantleCars, setDismantleCars] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [brand, setBrand] = useState('');
   const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
-  const [model, setModel] = useState("");
-  const [year, setYear] = useState("");
-  const [condition, setCondition] = useState("");
-  const [partCondition, setPartCondition] = useState("");
-  const [carBodyType, setCarBodyType] = useState("");
-  const [wheelPosition, setWheelPosition] = useState("");
-  const [drivenWhl, setDrivenWhl] = useState("");
-  const [transmission, setTransmission] = useState("");
-  const [color, setColor] = useState("");
-  const [fuelType, setFuelType] = useState("");
-  const [selectedCat, setSelectedCat] = useState("");
+  const [model, setModel] = useState('');
+  const [year, setYear] = useState('');
+  const [condition, setCondition] = useState('');
+  const [position, setPosition] = useState('');
+  const [carBodyType, setCarBodyType] = useState('');
+  const [wheelPosition, setWheelPosition] = useState('');
+  const [drivenWhl, setDrivenWhl] = useState('');
+  const [transmission, setTransmission] = useState('');
+  const [color, setColor] = useState('');
+  const [fuelType, setFuelType] = useState('');
+  const [description, setDescription] = useState('');
+  const [selectedCat, setSelectedCat] = useState('');
   const [subCategories, setSubCategories] = useState<DataModal[] | never[]>([]);
-  const [slctSubCateg, setSlctSubCateg] = useState("");
+  const [slctSubCateg, setSlctSubCateg] = useState('');
   const [partNamesOptions, setPartNamesOptions] = useState<
     DataModal[] | never[]
   >([]);
-  const [selectedPart, setSelectedPart] = useState("");
+  const [selectedPart, setSelectedPart] = useState('');
   // Uploaded images
   const [files, setFiles] = useState<string[]>([]);
 
-  const createData = () => {
-    //  SKU code. This code must be created dynamically
-    const productCode = "gir458";
-    return {
-      productCode: productCode,
-      category: selectedCat,
-      subCategory: slctSubCateg,
-      codes: ["TODO: test, change this"],
-      car: {
-        make: brand,
-        model: model,
-        engine: "V8",
-        engineCapacity: 5000,
-        enginePower: {
-          kW: 260,
-          hp: 349,
-        },
-        fuel: fuelType,
-        carProductionYear: year,
-        steeringWheelPosition: wheelPosition,
-        transmission: transmission,
-        bodyTape: carBodyType,
-        drivingWheels: drivenWhl,
-        carColor: color,
+  const createData = () => ({
+    // category: selectedCat,
+    // subCategory: slctSubCateg,
+    partName: selectedPart,
+    codes: ['TODO: test, change this'],
+    car: {
+      make: brand,
+      model: model,
+      engine: 'V8',
+      engineCapacity: 5000,
+      enginePower: {
+        kWh: 260,
+        hp: 349,
       },
-      name: "String",
-      position: partCondition,
-      priceWithoutVAT: 100,
-      price: 121,
-      photoUrls: [...files],
-      condition: condition,
-      status: "available",
-      odometer: 50000,
-      dimensions: {
-        length: 220,
-        width: 120,
-        height: 120,
-        weight: 400,
-        price: 6000,
+      fuel: fuelType,
+      carProductionYear: year,
+      steeringWheelPosition: wheelPosition,
+      transmission: transmission,
+      bodyTape: carBodyType,
+      drivingWheels: drivenWhl,
+      carColor: color,
+    },
+    name: 'String',
+    position: position,
+    description: description,
+    price: 121,
+    photoUrls: [...files],
+    condition: condition,
+    status: 'available',
+    odometer: 50000,
+    dimensions: {
+      width: 120,
+      length: 220,
+      height: 120,
+    },
+    weight: 400,
+  });
+
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    const data = createData();
+    fetch('http://localhost:8000/part', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-    };
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   };
 
   // sets options with selected brand models
   useEffect(() => {
-    if (brand && brand !== "0") {
+    if (brand && brand !== '0') {
       let index = 0;
       // finds selected brand
       brands.options.filter((item: Brand, i: number) =>
@@ -169,17 +182,6 @@ const Portal = () => {
     setFiles(newState);
   };
 
-  // add event listener for MAIN BUTTON PRIDETI
-  const addEventListener = (required:boolean) =>{
-    if (required !== true){
-      console.log('veikia');
-    }
-  }
-
-  // const addEvenrListener = (id:number, (event:any)=>{
-  //   event.preventDefault()
-  // });
-
   return (
     <div className={classes.portal}>
       <div className={classes.subDiv}>
@@ -196,41 +198,40 @@ const Portal = () => {
             <Button>PRIDĖTI AUTOMOBILĮ</Button>
           </div>
           <SelectComp
-            
             options={brands.options}
             handler={setBrand}
-            label={"Gamintojas"}
+            label={'Gamintojas'}
           />
           <SelectComp
             options={modelsOptions}
-            label={"Modelis"}
+            label={'Modelis'}
             handler={setModel}
           />
-          <SelectComp options={setYears()} label={"Metai"} handler={setYear} />
+          <SelectComp options={setYears()} label={'Metai'} handler={setYear} />
           <Search
-            label={"Detalės pavadinimo paieška"}
+            label={'Detalės pavadinimo paieška'}
             setSearchQuery={setSearchQuery}
           />
           <SelectComp
-          required={true}
+            required={true}
             options={mockState}
-            label={"Kategorija *"}
+            label={'Kategorija *'}
             handler={setSelectedCat}
           />
           <SelectComp
-          required={true}
+            required={true}
             options={subCategories}
-            label={"Subkategorija *"}
+            label={'Subkategorija *'}
             handler={setSlctSubCateg}
           />
           <SelectComp
-          required={true}
+            required={true}
             options={partNamesOptions}
-            label={"Pavadinimas *"}
+            label={'Pavadinimas *'}
             handler={setSelectedPart}
           />
           <SelectComp
-          required={true}
+            required={true}
             options={conditionPart.option}
             label={conditionPart.title}
             handler={setCondition}
@@ -238,7 +239,7 @@ const Portal = () => {
           <SelectComp
             options={positionPart.option}
             label={positionPart.title}
-            handler={setPartCondition}
+            handler={setPosition}
           />
           <SelectComp
             options={bodyType.option}
@@ -271,7 +272,7 @@ const Portal = () => {
             handler={setColor}
           />
           <div className={classes.formGroup}>
-            <SelectInput title={"Rida"} />
+            <Input title={'Rida'} />
           </div>
           <SelectComp
             options={fuel.option}
@@ -279,41 +280,41 @@ const Portal = () => {
             handler={setFuelType}
           />
           <div className={classes.formGroup}>
-            <SelectInput title={"Variklio talpa"} />
+            <Input title={'Variklio talpa'} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Variklio galia"} />
+            <Input title={'Variklio galia'} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Ilgis cm *"}
-            required={true} />
+            <Input title={'Ilgis cm *'} isRequired={true} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Plotins cm *"}
-            required={true} />
+            <Input title={'Plotins cm *'} isRequired={true} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Aukštis, cm *"}
-            required={true} />
+            <Input title={'Aukštis, cm *'} isRequired={true} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Svoris, kg *"}
-            required={true} />
+            <Input title={'Svoris, kg *'} isRequired={true} />
           </div>
           <div className={classes.formGroup}>
-            <SelectInput title={"Kaina *"}
-            required={true} />
+            <Input title={'Kaina *'} isRequired={true} />
           </div>
         </div>
         <p>Aprašymas *</p>
-        <textarea name=""></textarea>
+        <textarea
+          name=''
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setDescription(event.target.value)
+          }
+        ></textarea>
       </div>
 
       {/* Image */}
 
       <Upload files={files} handler={handleImgUpload} />
 
-      <Button id={1} type="submit" >
+      <Button id={1} type='submit' onClick={handleSubmit}>
         Pridėti
       </Button>
     </div>

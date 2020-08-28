@@ -4,7 +4,7 @@ export interface DataModal {
   subOptions: DataModal[] | never[];
 }
 
-const mockData = {
+const mockData1 = {
   title: 'Galiniai žibintai',
   id: 'rear-0100',
   subOptions: [
@@ -124,7 +124,7 @@ export const mockState: DataModal[] = [
   {
     title: 'Apšvietimo sistemos',
     id: 'lights-1',
-    subOptions: [mockData, turnLamp],
+    subOptions: [mockData1, turnLamp],
   },
   {
     title: 'Degalų mišinio sistema',
