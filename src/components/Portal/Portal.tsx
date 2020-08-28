@@ -21,17 +21,30 @@ import {
   dismantleCar,
 } from '../Data/Data';
 
-import classes from './Portal.module.scss';
 import Input from './Input/Input.comp';
-import CodeInput from './PartCodeAdd/CodeInput';
+import PartCodeForm from './PartCodeForm/PartCodeForm.comp';
 import Button from '../Button/Button';
 
+import classes from './Portal.module.scss';
+
+export type PartCode = { id: string; value: string };
+
 const Portal = () => {
+  // Regular expression used to check user input validation. It is passed to Input component at prop
+  const regEx = /^[0-9\b]+$/;
+
   const [dismantleCars, setDismantleCars] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [brand, setBrand] = useState('');
-  const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
-  const [model, setModel] = useState('');
+  const [name, setName] = useState('');
+  const [mileage, setMileage] = useState('');
+  const [engineCapacity, setEngineCapacity] = useState('');
+  const [enginePower, setEnginePower] = useState('');
+  const [width, setWidth] = useState('');
+  const [length, setLenght] = useState('');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const [price, setPrice] = useState('');
+
   const [year, setYear] = useState('');
   const [condition, setCondition] = useState('');
   const [position, setPosition] = useState('');
@@ -42,53 +55,80 @@ const Portal = () => {
   const [color, setColor] = useState('');
   const [fuelType, setFuelType] = useState('');
   const [description, setDescription] = useState('');
+
+  // State to manage user selection in Select elements and to render options in Select elements by user selected Options
+  // Brand and Models
+  const [brand, setBrand] = useState('');
+  // Models - Options for Models. Added when use selects Car Brand
+  const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
+  const [model, setModel] = useState('');
+
+  // Selected Category
   const [selectedCat, setSelectedCat] = useState('');
+  // subCategories - Options for SubCatagories. Added when user select Category
   const [subCategories, setSubCategories] = useState<DataModal[] | never[]>([]);
+  // Selected SubCategory
   const [slctSubCateg, setSlctSubCateg] = useState('');
+  // Part Names Options - Options for partName. Added when user selects SubCategory
   const [partNamesOptions, setPartNamesOptions] = useState<
     DataModal[] | never[]
   >([]);
-  const [selectedPart, setSelectedPart] = useState('');
+  const [selectedPartName, setSelectedPart] = useState('');
+
+  // Part Codes - used to store Part Codes and to render input elements in PartCodeForm component.
+  const [partCodes, setPartCodes] = useState<PartCode[]>([
+    { id: '1', value: '' },
+  ]);
+
   // Uploaded images
   const [files, setFiles] = useState<string[]>([]);
 
-  const createData = () => ({
-    // category: selectedCat,
-    // subCategory: slctSubCateg,
-    partName: selectedPart,
-    codes: ['TODO: test, change this'],
-    car: {
-      make: brand,
-      model: model,
-      engine: 'V8',
-      engineCapacity: 5000,
-      enginePower: {
-        kWh: 260,
-        hp: 349,
+  /**
+   *  Checks if items in PartCodes value properties are not empty, returns value to new Array
+   */
+  const getPartCodes = (): string[] =>
+    partCodes.filter((item) => item.value !== '').map((item) => item.value);
+
+  const createData = () => {
+    const partCodes = getPartCodes();
+    return {
+      // category: selectedCat,
+      // subCategory: slctSubCateg,
+      partName: selectedPartName,
+      codes: [...partCodes],
+      car: {
+        make: brand,
+        model: model,
+        engine: 'V8',
+        engineCapacity: engineCapacity,
+        enginePower: {
+          kWh: 260,
+          hp: 349,
+        },
+        fuel: fuelType,
+        carProductionYear: year,
+        steeringWheelPosition: wheelPosition,
+        transmission: transmission,
+        bodyTape: carBodyType,
+        drivingWheels: drivenWhl,
+        carColor: color,
       },
-      fuel: fuelType,
-      carProductionYear: year,
-      steeringWheelPosition: wheelPosition,
-      transmission: transmission,
-      bodyTape: carBodyType,
-      drivingWheels: drivenWhl,
-      carColor: color,
-    },
-    name: 'String',
-    position: position,
-    description: description,
-    price: 121,
-    photoUrls: [...files],
-    condition: condition,
-    status: 'available',
-    odometer: 50000,
-    dimensions: {
-      width: 120,
-      length: 220,
-      height: 120,
-    },
-    weight: 400,
-  });
+      name: name,
+      position: position,
+      description: description,
+      price: price,
+      photoUrls: [...files],
+      condition: condition,
+      status: 'available',
+      odometer: mileage,
+      dimensions: {
+        width: width,
+        length: length,
+        height: height,
+      },
+      weight: weight,
+    };
+  };
 
   const handleSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -197,6 +237,7 @@ const Portal = () => {
 
             <Button>PRIDĖTI AUTOMOBILĮ</Button>
           </div>
+          <Input title={'Detalės pavadinimas'} setValue={setName} isRequired={true}/>
           <SelectComp
             options={brands.options}
             handler={setBrand}
@@ -257,7 +298,7 @@ const Portal = () => {
             handler={setDrivenWhl}
           />
         </form>
-        <CodeInput />
+        <PartCodeForm inputList={partCodes} setInputList={setPartCodes} />
       </div>
       <div className={classes.subDiv}>
         <div className={classes.listStyle}>
@@ -272,7 +313,7 @@ const Portal = () => {
             handler={setColor}
           />
           <div className={classes.formGroup}>
-            <Input title={'Rida'} />
+            <Input title={'Rida'} regExp={regEx} setValue={setMileage} />
           </div>
           <SelectComp
             options={fuel.option}
@@ -280,25 +321,65 @@ const Portal = () => {
             handler={setFuelType}
           />
           <div className={classes.formGroup}>
-            <Input title={'Variklio talpa'} />
+            <Input
+              title={'Variklio talpa'}
+              regExp={regEx}
+              maxLength={7}
+              setValue={setEngineCapacity}
+            />
           </div>
           <div className={classes.formGroup}>
-            <Input title={'Variklio galia'} />
+            <Input
+              title={'Variklio galia'}
+              regExp={regEx}
+              maxLength={7}
+              setValue={setEnginePower}
+            />
           </div>
           <div className={classes.formGroup}>
-            <Input title={'Ilgis cm *'} isRequired={true} />
+            <Input
+              title={'Ilgis cm *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              setValue={setLenght}
+            />
           </div>
           <div className={classes.formGroup}>
-            <Input title={'Plotins cm *'} isRequired={true} />
+            <Input
+              title={'Plotins cm *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              setValue={setWidth}
+            />
           </div>
           <div className={classes.formGroup}>
-            <Input title={'Aukštis, cm *'} isRequired={true} />
+            <Input
+              title={'Aukštis, cm *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              setValue={setHeight}
+            />
           </div>
           <div className={classes.formGroup}>
-            <Input title={'Svoris, kg *'} isRequired={true} />
+            <Input
+              title={'Svoris, kg *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              setValue={setWeight}
+            />
           </div>
           <div className={classes.formGroup}>
-            <Input title={'Kaina *'} isRequired={true} />
+            <Input
+              title={'Kaina *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              setValue={setPrice}
+            />
           </div>
         </div>
         <p>Aprašymas *</p>

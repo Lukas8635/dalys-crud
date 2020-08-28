@@ -1,29 +1,18 @@
-import React, { useState } from 'react';
-import classes from './CodeInput.module.scss';
+import React from 'react';
+import classes from './PartCodeForm.module.scss';
 
-interface CodeInputDataInterface {
-  // partCode: string;
-  // name: string;
-  id: string;
-  value: string;
+import { PartCode } from '../Portal';
+
+interface Props {
+  inputList: PartCode[];
+  setInputList: Function;
 }
 
-const CodeInput = () => {
-  const codeInputData: CodeInputDataInterface = {
-    // partCode: '',
-    // name: 'pirmas',
-    id: '1',
-    value: '',
-  };
+interface State extends PartCode {}
 
-  const [inputList, setInputList] = useState<CodeInputDataInterface[]>([
-    codeInputData,
-  ]);
-
-  // handle input change
+const PartCodeForm: React.FC<Props> = ({ inputList, setInputList }) => {
   const handleInputChange = (
     event: { target: { id: string; value: string } }
-    // index: React.Key
   ) => {
     const { id, value } = event.target;
     const list = [...inputList];
@@ -32,17 +21,17 @@ const CodeInput = () => {
         item.value = value;
       }
     });
-
     setInputList(list);
   };
 
   // handle click event of the 'Pridėti dar vieną kodą' button
   const handleAddClick = () => {
-    setInputList((prevState) => {
+    setInputList((prevState: State[]) => {
+      console.log(prevState);
       const date = new Date();
       const stateCopy = [...prevState];
       const newCodeItem = {
-        ...codeInputData,
+        value: '',
         id: date.getTime().toString(),
       };
       stateCopy.push(newCodeItem);
@@ -93,4 +82,4 @@ const CodeInput = () => {
   );
 };
 
-export default CodeInput;
+export default PartCodeForm;
