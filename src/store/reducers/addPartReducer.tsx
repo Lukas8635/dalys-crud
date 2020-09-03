@@ -1,16 +1,63 @@
 import { ActionTypes } from '../actions/actionTypes';
 import { Action } from 'redux';
+import { StoreState } from '../store';
 
-export interface SetValueAction extends Action<typeof ActionTypes.SET_VALUE> {
-  payload: { key: string; value: string };
+import {
+  SetValueAction,
+  SetCarDetailsAction,
+  SetDimensionAction,
+  SetPartCodesAction,
+} from '../actions/addPartActions';
+
+type Actions =
+  | SetValueAction
+  | SetDimensionAction
+  | SetCarDetailsAction
+  | SetPartCodesAction;
+
+interface Car {
+  make: string;
+  model: string;
+  engine: string;
+  engineCapacity: string;
+  enginePower: {
+    kWh: string;
+    hp: string;
+  };
+  fuel: string;
+  carProductionYear: string;
+  steeringWheelPosition: string;
+  transmission: string;
+  bodyTape: string;
+  drivingWheels: string;
+  carColor: string;
 }
 
-export interface SetDimensionAction
-  extends Action<typeof ActionTypes.SET_DIMENSIONS> {
-  payload: { key: string; value: string };
+interface Data {
+  partName: string;
+  codes: [];
+  car: Car;
+  name: string;
+  position: string;
+  description: string;
+  price: string;
+  photoUrls: [];
+  condition: string;
+  status: string;
+  odometer: string;
+  dimensions: {
+    width: string;
+    length: string;
+    height: string;
+  };
+  weight: string;
 }
 
-const initialState = {
+interface InitialState {
+  data: Data
+}
+
+const initialState: InitialState = {
   data: {
     partName: '',
     codes: [],
@@ -48,17 +95,14 @@ const initialState = {
   },
 };
 
-export default (
-  state = initialState,
-  { type, payload }: SetValueAction | SetDimensionAction
-) => {
-  switch (type) {
+export default (state = initialState, action: Actions) => {
+  switch (action.type) {
     case ActionTypes.SET_VALUE:
       return {
         ...state,
         data: {
           ...state.data,
-          [payload.key]: payload.value,
+          [action.payload.key]: action.payload.value,
         },
       };
     case ActionTypes.SET_DIMENSIONS:
@@ -68,8 +112,27 @@ export default (
           ...state.data,
           dimensions: {
             ...state.data.dimensions,
-            [payload.key]: payload.value,
+            [action.payload.key]: action.payload.value,
           },
+        },
+      };
+    case ActionTypes.SET_CAR_DETAILS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          car: {
+            ...state.data.car,
+            [action.payload.key]: action.payload.value,
+          },
+        },
+      };
+    case ActionTypes.SET_PART_CODES:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          codes: action.payload,
         },
       };
 

@@ -6,11 +6,12 @@ import { PartCode } from '../Portal';
 interface Props {
   inputList: PartCode[];
   setInputList: Function;
+  setCodes: Function;
 }
 
 interface State extends PartCode {}
 
-const PartCodeForm: React.FC<Props> = ({ inputList, setInputList }) => {
+const PartCodeForm: React.FC<Props> = ({ inputList, setInputList, setCodes }) => {
   const handleInputChange = (
     event: { target: { id: string; value: string } }
   ) => {
@@ -21,6 +22,7 @@ const PartCodeForm: React.FC<Props> = ({ inputList, setInputList }) => {
         item.value = value;
       }
     });
+    console.log(list);
     setInputList(list);
   };
 

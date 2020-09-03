@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { addValue, addDimensions } from '../../store/actions/addPartActions';
+import {
+  addValue,
+  addDimensions,
+  addCarDetails,
+  setPartCodesAction,
+} from '../../store/actions/addPartActions';
 
 import SelectComp, { Option } from './SelectComp/SelectComp';
 import Input from './Input/Input.comp';
@@ -35,6 +40,10 @@ const Portal = () => {
   const regEx = /^[0-9\b]+$/;
 
   const dispatch = useDispatch();
+
+  const state = useSelector((state) => state);
+
+  console.log(state);
 
   const [dismantleCars, setDismantleCars] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -253,15 +262,28 @@ const Portal = () => {
           />
           <SelectComp
             options={brands.options}
-            handler={setBrand}
             label={'Gamintojas'}
+            keyName={'make'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
           <SelectComp
             options={modelsOptions}
             label={'Modelis'}
-            handler={setModel}
+            keyName={'model'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
-          <SelectComp options={setYears()} label={'Metai'} handler={setYear} />
+          <SelectComp
+            options={setYears()}
+            label={'Metai'}
+            keyName={'carProductionYear'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
+          />
           <Search
             label={'Detalės pavadinimo paieška'}
             setSearchQuery={setSearchQuery}
@@ -288,42 +310,67 @@ const Portal = () => {
             required={true}
             options={conditionPart.option}
             label={conditionPart.title}
-            handler={setCondition}
+            keyName={'condition'}
+            handler={(name: string, value: string) =>
+              dispatch(addValue({ key: name, value: value }))
+            }
           />
           <SelectComp
             options={positionPart.option}
             label={positionPart.title}
-            handler={setPosition}
+            keyName={'position'}
+            handler={(name: string, value: string) =>
+              dispatch(addValue({ key: name, value: value }))
+            }
           />
           <SelectComp
             options={bodyType.option}
             label={bodyType.title}
-            handler={setCarBodyType}
+            keyName={'bodyTape'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
           <SelectComp
             options={steeringWheelPosition.option}
             label={steeringWheelPosition.title}
-            handler={setWheelPosition}
+            keyName={'steeringWheelPosition'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
           <SelectComp
             options={drivenWheel.option}
             label={drivenWheel.title}
-            handler={setDrivenWhl}
+            keyName={'drivenWheel'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
         </form>
-        <PartCodeForm inputList={partCodes} setInputList={setPartCodes} />
+        <PartCodeForm
+          inputList={partCodes}
+          setCodes={(value: []) => dispatch(setPartCodesAction(value))}
+          setInputList={setPartCodes}
+        />
       </div>
       <div className={classes.subDiv}>
         <div className={classes.listStyle}>
           <SelectComp
             options={gearBox.option}
             label={gearBox.title}
-            handler={setTransmission}
+            keyName={'transmission'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
           <SelectComp
             options={colorPart.option}
             label={colorPart.title}
-            handler={setColor}
+            keyName={'carColor'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
           <div className={classes.formGroup}>
             <Input
@@ -338,7 +385,10 @@ const Portal = () => {
           <SelectComp
             options={fuel.option}
             label={fuel.title}
-            handler={setFuelType}
+            keyName={'fuel'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
           <div className={classes.formGroup}>
             <Input
@@ -347,7 +397,7 @@ const Portal = () => {
               maxLength={7}
               keyName={'engineCapacity'}
               setValue={(name: string, value: string) =>
-                dispatch(addValue({ key: name, value: value }))
+                dispatch(addCarDetails({ key: name, value: value }))
               }
             />
           </div>
@@ -358,7 +408,7 @@ const Portal = () => {
               maxLength={7}
               keyName={'enginePower'}
               setValue={(name: string, value: string) =>
-                dispatch(addValue({ key: name, value: value }))
+                dispatch(addCarDetails({ key: name, value: value }))
               }
             />
           </div>
@@ -427,7 +477,9 @@ const Portal = () => {
         <textarea
           name=''
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-            setDescription(event.target.value)
+            dispatch(
+              addValue({ key: 'description', value: event.target.value })
+            )
           }
         ></textarea>
       </div>

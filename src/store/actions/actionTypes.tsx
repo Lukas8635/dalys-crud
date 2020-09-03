@@ -1,4 +1,6 @@
 export enum ActionTypes {
   SET_VALUE,
   SET_DIMENSIONS,
+  SET_CAR_DETAILS,
+  SET_PART_CODES
 }

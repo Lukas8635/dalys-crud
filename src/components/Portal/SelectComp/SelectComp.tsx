@@ -6,6 +6,7 @@ interface Props {
   label: string;
   options: Option[];
   handler: Function;
+  keyName?: string;
   required?: boolean;
 }
 
@@ -14,7 +15,13 @@ export interface Option {
   id: string;
 }
 
-const SelectComp: React.FC<Props> = ({ label, options, handler, required }) => {
+const SelectComp: React.FC<Props> = ({
+  label,
+  options,
+  handler,
+  keyName,
+  required,
+}) => {
   return (
     <div className={classes.formGroup}>
       <label htmlFor=''>{label}</label>
@@ -22,7 +29,7 @@ const SelectComp: React.FC<Props> = ({ label, options, handler, required }) => {
         required={required ? required : false}
         className={classes.select}
         onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-          handler((event.target as HTMLSelectElement).value)
+          handler(keyName, (event.target as HTMLSelectElement).value)
         }
       >
         <option value={0}>----</option>
