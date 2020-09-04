@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { fetchCat } from '../../store/actions/categoryActions';
+
 import {
   addValue,
   addDimensions,
@@ -44,10 +46,10 @@ const Portal = () => {
   const dispatch = useDispatch();
 
   // Selectors
-  const brand = useSelector((state: StoreState) => state.data.car.make);
-  const data = useSelector((state: StoreState) => state.data);
+  const brand = useSelector((state: StoreState) => state.part.data.car.make);
+  const data = useSelector((state: StoreState) => state.part.data);
 
-  console.log(data);
+  const categories = useSelector((state: StoreState) => state.categories);
 
   const [dismantleCars, setDismantleCars] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -148,6 +150,13 @@ const Portal = () => {
   // TODO: Implement useEffect which gets all data need for user to add new part - brands, models, categories, etc.
 
   /**
+   *  Gets all Categories, subCategories ant Part names from DB
+   */
+  useEffect(() => {
+    dispatch(fetchCat());
+  }, []);
+
+  /**
     sets options with selected brand models
   */
   useEffect(() => {
@@ -170,6 +179,7 @@ const Portal = () => {
       setModelsOptions([]);
     }
   }, [brand]);
+
   /**
     sets SubCategory options when Category is selected
   */

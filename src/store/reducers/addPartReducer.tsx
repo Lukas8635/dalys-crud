@@ -1,6 +1,4 @@
 import { ActionTypes } from '../actions/actionTypes';
-import { Action } from 'redux';
-import { StoreState } from '../store';
 
 import {
   SetValueAction,
@@ -15,6 +13,7 @@ type Actions =
   | SetCarDetailsAction
   | SetPartCodesAction;
 
+  // TODO: All this interfaces, do it really needed?
 interface Car {
   make: string;
   model: string;
