@@ -2,7 +2,7 @@ import { ActionTypes } from '../actions/actionTypes';
 
 import { Actions } from '../actions/categoryActions';
 
-interface Category {
+export interface Category {
   categoryName: string;
   translations: {
     lt: string;

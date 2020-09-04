@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Search from '../../Search/Search.comp';
 import SelectComp from '../SelectComp/SelectComp';
+import SelectCat from '../../SelectCat/SelectCat.comp';
 import Spinner from '../../Spinner/Spinner.comp';
 
 import { fetchCat } from '../../../store/actions/categoryActions';
@@ -13,9 +14,9 @@ import classes from './Categories.module.scss';
 import { DataModal, mockState } from '../../../store/categories';
 
 const Categories = () => {
-  const state = useSelector((state: StoreState) => state.categories.categories);
-
-  state.forEach((item) => console.log(item));
+  const categories = useSelector(
+    (state: StoreState) => state.categories.categories
+  );
 
   const dispatch = useDispatch();
 
@@ -38,16 +39,23 @@ const Categories = () => {
   useEffect(() => {
     dispatch(fetchCat());
   }, []);
-
+  
+  //  TODO: change logic - use boolean var to check if data is loaded, not the categories.length
   return (
     <div>
-      {state.length ? (
+      {categories.length ? (
         <div>
           <Search
             label={'Detalės pavadinimo paieška'}
             setSearchQuery={setSearchQuery}
           />
-          <SelectComp
+          <SelectCat
+            label={'Kategorija'}
+            required={true}
+            handler={() => {}}
+            options={categories}
+          />
+          {/* <SelectComp
             required={true}
             options={mockState}
             label={'Kategorija *'}
@@ -64,7 +72,7 @@ const Categories = () => {
             options={partNamesOptions}
             label={'Pavadinimas *'}
             handler={setSelectedPart}
-          />
+          /> */}
         </div>
       ) : (
         <Spinner />
