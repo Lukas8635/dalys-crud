@@ -6,7 +6,7 @@ import SelectComp from '../SelectComp/SelectComp';
 import SelectCat from '../../SelectCat/SelectCat.comp';
 import Spinner from '../../Spinner/Spinner.comp';
 
-import { fetchCat } from '../../../store/actions/categoryActions';
+import { fetchCat, setSelection } from '../../../store/actions/categoryActions';
 import { StoreState } from '../../../store/store';
 
 import classes from './Categories.module.scss';
@@ -17,6 +17,10 @@ const Categories = () => {
   const categories = useSelector(
     (state: StoreState) => state.categories.categories
   );
+
+  const state = useSelector((state: StoreState) => state.categories);
+
+  console.log(state);
 
   const dispatch = useDispatch();
 
@@ -39,7 +43,7 @@ const Categories = () => {
   useEffect(() => {
     dispatch(fetchCat());
   }, []);
-  
+
   //  TODO: change logic - use boolean var to check if data is loaded, not the categories.length
   return (
     <div>
@@ -51,6 +55,21 @@ const Categories = () => {
           />
           <SelectCat
             label={'Kategorija'}
+            keyName={'selectedCat'}
+            required={true}
+            handler={(key: string, selection: string) =>
+              dispatch(setSelection(key, selection))
+            }
+            options={categories}
+          />
+          <SelectCat
+            label={'Subkategorija'}
+            required={true}
+            handler={() => {}}
+            options={categories}
+          />
+          <SelectCat
+            label={'Pavadinimas'}
             required={true}
             handler={() => {}}
             options={categories}
