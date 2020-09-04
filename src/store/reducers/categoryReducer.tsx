@@ -2,7 +2,38 @@ import { ActionTypes } from '../actions/actionTypes';
 
 import { Actions } from '../actions/categoryActions';
 
-const initialState = {
+interface Category {
+  categoryName: string;
+  translations: {
+    lt: string;
+    en: string;
+  };
+  iconUrl: string;
+  subcategories: SubCategory[];
+}
+
+interface SubCategory {
+  categoryName: string;
+  translations: {
+    lt: string;
+    en: string;
+  };
+  partNames: PartName[];
+}
+
+interface PartName {
+  partNames: [];
+  translations: {
+    lt: string;
+    en: string;
+  };
+}
+
+interface InitialState {
+  categories: Category[];
+}
+
+const initialState: InitialState = {
   categories: [],
 };
 

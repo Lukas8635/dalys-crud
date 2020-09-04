@@ -6,10 +6,8 @@ import Categories from './Categories/Categories.comp';
 import Input from './Input/Input.comp';
 import PartCodeForm from './PartCodeForm/PartCodeForm.comp';
 import Button from '../Button/Button';
-import Search from '../Search/Search.comp';
 import Upload from '../Upload/Upload.comp';
 
-import { fetchCat } from '../../store/actions/categoryActions';
 import {
   addValue,
   addDimensions,
@@ -48,7 +46,6 @@ const Portal = () => {
   const data = useSelector((state: StoreState) => state.part.data);
 
   const [dismantleCars, setDismantleCars] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
 
   // State to manage user selection in Select elements and to render options in Select elements by user selected Options
   // Brand and Models
@@ -58,16 +55,14 @@ const Portal = () => {
   const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
 
   // Selected Category
-  const [selectedCat, setSelectedCat] = useState('');
+  const [selectedCat] = useState('');
   // subCategories - Options for SubCatagories. Added when user select Category
   const [subCategories, setSubCategories] = useState<DataModal[] | never[]>([]);
   // Selected SubCategory
-  const [slctSubCateg, setSlctSubCateg] = useState('');
+  const [slctSubCateg] = useState('');
   // Part Names Options - Options for partName. Added when user selects SubCategory
-  const [partNamesOptions, setPartNamesOptions] = useState<
-    DataModal[] | never[]
-  >([]);
-  const [selectedPartName, setSelectedPart] = useState('');
+  const [, setPartNamesOptions] = useState<DataModal[] | never[]>([]);
+  const [selectedPartName] = useState('');
 
   // Part Codes - used to store Part Codes and to render input elements in PartCodeForm component.
   const [partCodes, setPartCodes] = useState<PartCode[]>([
