@@ -8,6 +8,8 @@ import {
   setPartCodesAction,
 } from '../../store/actions/addPartActions';
 
+import { StoreState } from '../../store/store';
+
 import SelectComp, { Option } from './SelectComp/SelectComp';
 import Input from './Input/Input.comp';
 import PartCodeForm from './PartCodeForm/PartCodeForm.comp';
@@ -41,39 +43,21 @@ const Portal = () => {
 
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state);
+  // Selectors
+  const brand = useSelector((state: StoreState) => state.data.car.make);
+  const data = useSelector((state: StoreState) => state.data);
 
-  console.log(state);
+  console.log(data);
 
   const [dismantleCars, setDismantleCars] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [name, setName] = useState('');
-  const [mileage, setMileage] = useState('');
-  const [engineCapacity, setEngineCapacity] = useState('');
-  const [enginePower, setEnginePower] = useState('');
-  const [width, setWidth] = useState('');
-  const [length, setLenght] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-  const [price, setPrice] = useState('');
-
-  const [year, setYear] = useState('');
-  const [condition, setCondition] = useState('');
-  const [position, setPosition] = useState('');
-  const [carBodyType, setCarBodyType] = useState('');
-  const [wheelPosition, setWheelPosition] = useState('');
-  const [drivenWhl, setDrivenWhl] = useState('');
-  const [transmission, setTransmission] = useState('');
-  const [color, setColor] = useState('');
-  const [fuelType, setFuelType] = useState('');
-  const [description, setDescription] = useState('');
 
   // State to manage user selection in Select elements and to render options in Select elements by user selected Options
   // Brand and Models
-  const [brand, setBrand] = useState('');
+  // const [brand, setBrand] = useState('');
+
   // Models - Options for Models. Added when use selects Car Brand
   const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
-  const [model, setModel] = useState('');
 
   // Selected Category
   const [selectedCat, setSelectedCat] = useState('');
@@ -104,41 +88,42 @@ const Portal = () => {
   const createData = () => {
     const partCodes = getPartCodes();
     return {
-      // category: selectedCat,
-      // subCategory: slctSubCateg,
+      // TODO: Need to get all categories from DB, save it to Redux and when user select category, send name to Redux as pointer in Object. Redux returns needed subCat and so on.
+      category: selectedCat,
+      subCategory: slctSubCateg,
       partName: selectedPartName,
       codes: [...partCodes],
       car: {
-        make: brand,
-        model: model,
+        make: data.car.make,
+        model: data.car.model,
         engine: 'V8',
-        engineCapacity: engineCapacity,
+        engineCapacity: data.car.engineCapacity,
         enginePower: {
           kWh: 260,
           hp: 349,
         },
-        fuel: fuelType,
-        carProductionYear: year,
-        steeringWheelPosition: wheelPosition,
-        transmission: transmission,
-        bodyTape: carBodyType,
-        drivingWheels: drivenWhl,
-        carColor: color,
+        fuel: data.car.fuel,
+        carProductionYear: data.car.carProductionYear,
+        steeringWheelPosition: data.car.steeringWheelPosition,
+        transmission: data.car.transmission,
+        bodyTape: data.car.bodyTape,
+        drivingWheels: data.car.drivingWheels,
+        carColor: data.car.carColor,
       },
-      name: name,
-      position: position,
-      description: description,
-      price: price,
+      name: data.partName,
+      position: data.position,
+      description: data.description,
+      price: data.price,
       photoUrls: [...files],
-      condition: condition,
+      condition: data.condition,
       status: 'available',
-      odometer: mileage,
+      odometer: data.odometer,
       dimensions: {
-        width: width,
-        length: length,
-        height: height,
+        width: data.dimensions.width,
+        length: data.dimensions.length,
+        height: data.dimensions.length,
       },
-      weight: weight,
+      weight: data.weight,
     };
   };
 
@@ -159,6 +144,9 @@ const Portal = () => {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };
+
+  // TODO: Implement useEffect which gets all data need for user to add new part - brands, models, categories, etc.
+
   /**
     sets options with selected brand models
   */
@@ -342,7 +330,7 @@ const Portal = () => {
           <SelectComp
             options={drivenWheel.option}
             label={drivenWheel.title}
-            keyName={'drivenWheel'}
+            keyName={'drivingWheels'}
             handler={(name: string, value: string) =>
               dispatch(addCarDetails({ key: name, value: value }))
             }
