@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchCat } from '../../store/actions/categoryActions';
-
-import {
-  addValue,
-  addDimensions,
-  addCarDetails,
-  setPartCodesAction,
-} from '../../store/actions/addPartActions';
-
-import { StoreState } from '../../store/store';
-
 import SelectComp, { Option } from './SelectComp/SelectComp';
+import Categories from './Categories/Categories.comp';
 import Input from './Input/Input.comp';
 import PartCodeForm from './PartCodeForm/PartCodeForm.comp';
 import Button from '../Button/Button';
 import Search from '../Search/Search.comp';
 import Upload from '../Upload/Upload.comp';
 
+import { fetchCat } from '../../store/actions/categoryActions';
+import {
+  addValue,
+  addDimensions,
+  addCarDetails,
+  setPartCodesAction,
+} from '../../store/actions/addPartActions';
+import { StoreState } from '../../store/store';
 import { mockState, DataModal } from '../../store/categories';
 import {
   brands,
@@ -48,8 +46,6 @@ const Portal = () => {
   // Selectors
   const brand = useSelector((state: StoreState) => state.part.data.car.make);
   const data = useSelector((state: StoreState) => state.part.data);
-
-  const categories = useSelector((state: StoreState) => state.categories);
 
   const [dismantleCars, setDismantleCars] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -148,13 +144,6 @@ const Portal = () => {
   };
 
   // TODO: Implement useEffect which gets all data need for user to add new part - brands, models, categories, etc.
-
-  /**
-   *  Gets all Categories, subCategories ant Part names from DB
-   */
-  useEffect(() => {
-    dispatch(fetchCat());
-  }, []);
 
   /**
     sets options with selected brand models
@@ -282,7 +271,8 @@ const Portal = () => {
               dispatch(addCarDetails({ key: name, value: value }))
             }
           />
-          <Search
+          <Categories />
+          {/* <Search
             label={'Detalės pavadinimo paieška'}
             setSearchQuery={setSearchQuery}
           />
@@ -303,7 +293,7 @@ const Portal = () => {
             options={partNamesOptions}
             label={'Pavadinimas *'}
             handler={setSelectedPart}
-          />
+          /> */}
           <SelectComp
             required={true}
             options={conditionPart.option}
