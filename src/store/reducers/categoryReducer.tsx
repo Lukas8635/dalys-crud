@@ -3,6 +3,7 @@ import { ActionTypes } from '../actions/actionTypes';
 import { Actions } from '../actions/categoryActions';
 
 export interface Category {
+  _id: string;
   categoryName: string;
   translations: {
     lt: string;
@@ -12,7 +13,8 @@ export interface Category {
   subcategories: SubCategory[];
 }
 
-interface SubCategory {
+export interface SubCategory {
+  _id: string;
   categoryName: string;
   translations: {
     lt: string;
@@ -21,7 +23,8 @@ interface SubCategory {
   partNames: PartName[];
 }
 
-interface PartName {
+export interface PartName {
+  _id: string;
   partNames: [];
   translations: {
     lt: string;
@@ -29,8 +32,10 @@ interface PartName {
   };
 }
 
-interface InitialState {
+export interface InitialState {
   categories: Category[];
+  subcategories: SubCategory[];
+  partNames: PartName[];
   selectedCat: string;
   selectedSubCat: string;
   selectedPartName: string;
@@ -38,6 +43,8 @@ interface InitialState {
 
 const initialState: InitialState = {
   categories: [],
+  subcategories: [],
+  partNames: [],
   selectedCat: '',
   selectedSubCat: '',
   selectedPartName: '',
@@ -56,9 +63,12 @@ export default (state = initialState, action: Actions) => {
         categories: action.payload,
       };
     case ActionTypes.SET_SELECTION:
-      return { ...state,
-        [action.payload.key]: action.payload.selection
-      };
+      const setCat = action.payload.selector(state, action.payload.selectorKey);
+      const options = setCat.filter(
+        (item: Category | SubCategory | PartName) =>
+          item._id === action.payload.selection_id
+      );
+      return { ...state, [action.payload.key]: options[0][action.payload.key] };
     default:
       return state;
   }

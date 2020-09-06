@@ -45,7 +45,7 @@ const Portal = () => {
   const brand = useSelector((state: StoreState) => state.part.data.car.make);
   const data = useSelector((state: StoreState) => state.part.data);
 
-  const [dismantleCars, setDismantleCars] = useState('');
+  const [, setDismantleCars] = useState('');
 
   // State to manage user selection in Select elements and to render options in Select elements by user selected Options
   // Brand and Models
@@ -267,28 +267,6 @@ const Portal = () => {
             }
           />
           <Categories />
-          {/* <Search
-            label={'Detalės pavadinimo paieška'}
-            setSearchQuery={setSearchQuery}
-          />
-          <SelectComp
-            required={true}
-            options={mockState}
-            label={'Kategorija *'}
-            handler={setSelectedCat}
-          />
-          <SelectComp
-            required={true}
-            options={subCategories}
-            label={'Subkategorija *'}
-            handler={setSlctSubCateg}
-          />
-          <SelectComp
-            required={true}
-            options={partNamesOptions}
-            label={'Pavadinimas *'}
-            handler={setSelectedPart}
-          /> */}
           <SelectComp
             required={true}
             options={conditionPart.option}

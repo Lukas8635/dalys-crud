@@ -1,4 +1,4 @@
-import { Action, Store } from 'redux';
+import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { ActionTypes } from './actionTypes';
 import { StoreState } from '../store';
@@ -16,7 +16,9 @@ interface FetchCategoriesFail
 interface SetSelection extends Action<ActionTypes.SET_SELECTION> {
   payload: {
     key: string;
-    selection: string;
+    selection_id: string;
+    selector: Function;
+    selectorKey: string;
   };
 }
 
@@ -24,7 +26,7 @@ export type Actions =
   | FetchCategoriesStart
   | FetchCategoriesSuccess
   | FetchCategoriesFail
-  | SetSelection
+  | SetSelection;
 
 /**
  *  Gets Categories, SubCategories and Part Names from DB and saves in to Redux Store
@@ -54,10 +56,17 @@ export const fetchCat = (): ThunkAction<
   }
 };
 
-export const setSelection = (key: string, selection: string) => ({
+export const setSelection = (
+  key: string,
+  selection: string,
+  selector: Function,
+  selectorKey: string
+) => ({
   type: ActionTypes.SET_SELECTION,
   payload: {
     key: key,
-    selection: selection,
+    selection_id: selection,
+    selector: selector,
+    selectorKey: selectorKey,
   },
 });
