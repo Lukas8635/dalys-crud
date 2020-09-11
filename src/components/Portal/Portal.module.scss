@@ -1,5 +1,5 @@
 @import '../../mainSass/variables.module.scss';
-@import-normalize;
+
 
 $colors:(background_color: #ededed,
     title_color:#062a78,
@@ -10,9 +10,9 @@ $colors:(background_color: #ededed,
 
 @function color($color-name) {
     @return map-get($colors, $color-name)
-}
+};
 
-;
+
 
 
 
