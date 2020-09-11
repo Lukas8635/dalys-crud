@@ -81,9 +81,8 @@ const UserInputObject = {
 export default UserInputObject;
 
 const UserInputObject002 = {
-  brand: 'BMW',
-  model: 'X5',
-  carProductionYear: '2015',
+  // detalės unikalus kodas (SKU)
+  productCode: '',
   // partNameSearch: 'input',
   category: {
     name: 'Variklio skyrius',
@@ -93,23 +92,34 @@ const UserInputObject002 = {
     name: 'Variklis',
     iconURL: 'string',
   },
-  name: 'BMW variklis x5',
-  condition: 'new',
-  position: 'front',
-  engine: 'V8',
-  bodyType: 'suv',
-  steeringWheelPosition: 'left',
-  drivingWheels: 'all',
   codes: ['string'],
-  transmission: 'automatic',
-  carColor: 'black',
-  odometer: 50100,
-  fuel: 'gasoline',
-  engineCapacity: 5000,
-  enginePower: {
-    kW: 260,
-    hp: 349,
+  car: {
+    make: 'BMW',
+    model: 'X5',
+    engine: 'V8',
+    engineCapacity: 5000,
+    enginePower: {
+      kW: 260,
+      hp: 349,
+    },
+    fuel: 'gasoline',
+    carProductionYear: '2015',
+    steeringWheelPosition: 'left',
+    transmission: 'automatic',
+    bodyType: 'suv',
+    drivingWheels: 'all',
+    carColor: 'black',
   },
+
+  name: 'BMW variklis x5',
+  position: 'front',
+  description: 'string',
+  priceWithoutVAT: 100,
+  price: 121,
+  photoUrls: [],
+  condition: 'new',
+  status: 'available',
+  odometer: 50100,
   dimensions: {
     length: 220,
     width: 120,
