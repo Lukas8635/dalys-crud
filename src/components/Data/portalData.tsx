@@ -210,9 +210,19 @@ const audiR8Engines: ModelType = {
     },
   ],
 };
+export const engine = {
+  title: 'Variklis',
+  id: 'egine1',
+  required: true,
+  option:[
+    { title: 'V12 4L', id: 'v124L' },
+    { title: 'V8 2L', id: 'v82L' },
+    { title: 'TDi 1,9 88kw', id: '88kwtdi' },
+  ]
+}
 
 export const conditionPart = {
-  title: 'Būklė*',
+  title: 'Būklė',
   id: 'condition1',
   required: true,
   option: [

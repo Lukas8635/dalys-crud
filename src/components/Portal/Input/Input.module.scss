@@ -1,14 +1,15 @@
-.formGroup {
-  display: flex;
+@import "../../../mainSass/variables.module.scss";
+
+input{
   align-items: flex-start;
-  flex-direction: column;    
+  border:0.2rem solid $borders;
+  border-radius: 0.7rem;
+  width: 28.4rem;
+  height: 3.6rem;
+  font-size: $font-size-13px;
+  color: black;
+  margin: 0 ;
+  font-family: $monserat;
+  font-weight: 600;
 }
-.input {
-  width: 100%;
- 
-}
-.invalid{
-  border: 1px solid red;
-  background-color: salmon;
-  border-radius: 3px;
-}
+

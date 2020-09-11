@@ -36,9 +36,10 @@ const Input: React.FC<Props> = ({
   };
 
   return (
-    <div className={classes.formGroup}>
-      <label htmlFor='#'>{title}</label>
+    <div >
+      {/* <label htmlFor='#'>{title}</label> */}
       <input
+        placeholder={title}
         className={`${classes.input} ${isValid ? '' : classes.invalid}`}
         type='text'
         required={isRequired}

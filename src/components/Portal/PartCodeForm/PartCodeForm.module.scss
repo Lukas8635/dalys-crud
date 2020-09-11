@@ -1,14 +1,32 @@
-.formGroup {
-  display: flex;
-  align-items: center;
-  flex-direction: column;    
-}
-.input {
-  width: 100%;
-}
-.button {
-  margin: 5px auto 5px;
-  width: 80px;
-  align-items: center;
+@import '../../../mainSass/variables.module.scss';
 
+
+.input {
+  height:4rem;
+  width: 29rem;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+  color: #3d3d3d;
+  opacity: 1;
+  padding-left: 2rem;
+  border:0.2rem solid $borders;
+  font-family: $monserat;
+  
+  
 }
+::placeholder {
+  color:$selectText;
+  opacity: 1;
+}
+
+.partCodeButton {
+  font-family: $monserat;
+  margin-left: 2rem;
+  display: flex;
+  align-self: flex-start;
+  border: none;
+  background-color: #fff;
+  font-size:1.3rem;
+  color: $textGrey;
+}
+
