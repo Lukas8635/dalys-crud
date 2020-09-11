@@ -1,17 +1,19 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import store from './store/store';
+
+import Portal from './components/Portal/Portal';
 
 import './App.css';
-import Portal from './components/Portal/Portal';
-// import Testas from './testas';
-// import Testas from './testas';
 
-const App = (): JSX.Element =>  {
+const App = (): JSX.Element => {
   return (
     <div className='App'>
-      <Portal/>
-      {/* <Testas/> */}
+      <Provider store={store}>
+        <Portal />
+      </Provider>
     </div>
   );
-}
+};
 
 export default App;

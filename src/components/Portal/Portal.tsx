@@ -1,209 +1,457 @@
-import React, { useState } from "react";
-import testas from "../../img/testas.png";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import SelectOptions from "./SelectOptions/SelectOptions";
-import SelectUserInput from "../SelectUserInput/SelectUserInput.comp";
+import SelectComp, { Option } from './SelectComp/SelectComp';
+import Categories from './Categories/Categories.comp';
+import Input from './Input/Input.comp';
+import PartCodeForm from './PartCodeForm/PartCodeForm.comp';
+import Button from '../Button/Button';
+import Upload from '../Upload/Upload.comp';
 
 import {
-  brand1,
-  CarCollectByBrand,
-  OptionInterface,
-  getYearsmModel,
+  addValue,
+  addDimensions,
+  addCarDetails,
+  setPartCodesAction,
+} from '../../store/actions/addPartActions';
+import { StoreState } from '../../store/store';
+import { mockState, DataModal } from '../../store/categories';
+import {
+  brands,
   conditionPart,
   positionPart,
   bodyType,
   steeringWheelPosition,
-  steeringWheel,
+  drivenWheel,
   gearBox,
   colorPart,
   fuel,
-} from "../Data/Data";
+  Brand,
+  ModelType,
+  dismantleCar,
+} from '../Data/Data';
 
-import classes from "./Portal.module.scss";
-import SelectComp from "./SelectComp/SelectComp";
+import classes from './Portal.module.scss';
+
+export type PartCode = { id: string; value: string };
 
 const Portal = () => {
-  const [models, setModelsOptions] = useState([{ pav: "----", id: "noneID" }]);
-  const [model, setModel] = useState("");
-  // This method 'maybe' will be use to get value from inputs
-  // const handleInput = (
-  //   e: React.ChangeEvent<HTMLSelectElement>,
-  //   key: string,
-  //   value: string
-  // ): { [key:string]: typeof value } => ({ [key]: value });
+  // Regular expression used to check user input validation. It is passed to Input component at prop
+  const regEx = /^[0-9\b]+$/;
 
-  // test method, to log values.
+  const dispatch = useDispatch();
 
-  console.log(model);
+  // Selectors
+  const brand = useSelector((state: StoreState) => state.part.data.car.make);
+  const data = useSelector((state: StoreState) => state.part.data);
 
-  const getModelOptions = (value: string, brands: CarCollectByBrand) => {
-    brands.option.map((item: OptionInterface) =>
-      item.pav === value ? setModelsOptions(item.models) : null
-    );
+  const [, setDismantleCars] = useState('');
+
+  // State to manage user selection in Select elements and to render options in Select elements by user selected Options
+  // Brand and Models
+  // const [brand, setBrand] = useState('');
+
+  // Models - Options for Models. Added when use selects Car Brand
+  const [modelsOptions, setModelsOptions] = useState<Option[] | never[]>([]);
+
+  // Selected Category
+  const [selectedCat] = useState('');
+  // subCategories - Options for SubCatagories. Added when user select Category
+  const [subCategories, setSubCategories] = useState<DataModal[] | never[]>([]);
+  // Selected SubCategory
+  const [slctSubCateg] = useState('');
+  // Part Names Options - Options for partName. Added when user selects SubCategory
+  const [, setPartNamesOptions] = useState<DataModal[] | never[]>([]);
+  const [selectedPartName] = useState('');
+
+  // Part Codes - used to store Part Codes and to render input elements in PartCodeForm component.
+  const [partCodes, setPartCodes] = useState<PartCode[]>([
+    { id: '1', value: '' },
+  ]);
+
+  // Uploaded images
+  const [files, setFiles] = useState<string[]>([]);
+
+  /**
+   *  Checks if items in PartCodes value properties are not empty, returns value to new Array
+   */
+  const getPartCodes = (): string[] =>
+    partCodes.filter((item) => item.value !== '').map((item) => item.value);
+
+  const createData = () => {
+    const partCodes = getPartCodes();
+    return {
+      // TODO: Need to get all categories from DB, save it to Redux and when user select category, send name to Redux as pointer in Object. Redux returns needed subCat and so on.
+      category: selectedCat,
+      subCategory: slctSubCateg,
+      partName: selectedPartName,
+      codes: [...partCodes],
+      car: {
+        make: data.car.make,
+        model: data.car.model,
+        engine: 'V8',
+        engineCapacity: data.car.engineCapacity,
+        enginePower: {
+          kWh: 260,
+          hp: 349,
+        },
+        fuel: data.car.fuel,
+        carProductionYear: data.car.carProductionYear,
+        steeringWheelPosition: data.car.steeringWheelPosition,
+        transmission: data.car.transmission,
+        bodyTape: data.car.bodyTape,
+        drivingWheels: data.car.drivingWheels,
+        carColor: data.car.carColor,
+      },
+      name: data.partName,
+      position: data.position,
+      description: data.description,
+      price: data.price,
+      photoUrls: [...files],
+      condition: data.condition,
+      status: 'available',
+      odometer: data.odometer,
+      dimensions: {
+        width: data.dimensions.width,
+        length: data.dimensions.length,
+        height: data.dimensions.length,
+      },
+      weight: data.weight,
+    };
   };
 
-  const handleInput = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    // key: string,
-    value: string
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    switch (true) {
-      case value === "BMW":
-        console.log(brand1.option[1].models[1].pav);
-        getModelOptions(value, brand1);
-        break;
-      case value === "Audi":
-        getModelOptions(value, brand1);
-        break;
-      case value === brand1.option[1].models[1].pav:
-        console.log(brand1.option[1].models[1].pav);
-        // setModels(brand1.option[1].models[1].pav)
-        break;
-      default:
-        console.log("Pasirinkite marke");
+    event.preventDefault();
+    const data = createData();
+    fetch('http://localhost:8000/part', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
+
+  // TODO: Implement useEffect which gets all data need for user to add new part - brands, models, categories, etc.
+
+  /**
+    sets options with selected brand models
+  */
+  useEffect(() => {
+    if (brand && brand !== '0') {
+      let index = 0;
+      // finds selected brand
+      brands.options.filter((item: Brand, i: number) =>
+        item.id === brand ? (index = i) : null
+      );
+      // gets selected brands models and creates array of options
+      const options: Option[] = brands.options[index].models.map(
+        (item: ModelType) => ({
+          title: item.model,
+          id: item.id,
+        })
+      );
+      setModelsOptions(options);
+    } else {
+      // if none brand selected (----) sets models options to empty array
+      setModelsOptions([]);
     }
+  }, [brand]);
+
+  /**
+    sets SubCategory options when Category is selected
+  */
+  useEffect(() => {
+    if (selectedCat) {
+      let subCat: DataModal[] = mockState.filter(
+        (item: DataModal) => item.id === selectedCat
+      );
+      if (subCat.length) {
+        setSubCategories(subCat[0].subOptions);
+        setPartNamesOptions([]);
+      } else {
+        // clears options for SubCategory and Part Names
+        setSubCategories([]);
+        setPartNamesOptions([]);
+      }
+    }
+  }, [selectedCat]);
+  /**
+     sets Part name options when SubCategory is selected
+   */
+  useEffect(() => {
+    if (slctSubCateg) {
+      let partName: DataModal[] = subCategories.filter(
+        (item: DataModal) => item.id === slctSubCateg
+      );
+      return partName.length
+        ? setPartNamesOptions(partName[0].subOptions)
+        : setPartNamesOptions([]);
+    }
+  }, [slctSubCateg]);
+
+  const setYears = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const yearsArray = [];
+    for (let i = 0; i < 71; i++) {
+      const yearCount = year - i;
+      yearsArray.push({
+        title: yearCount.toString(),
+        id: yearCount.toString(),
+      });
+    }
+    return yearsArray;
+  };
+
+  const handleImgUpload = (file: FileList) => {
+    if (!file?.length) {
+      return;
+    }
+    const newState = [...files];
+    newState.push(URL.createObjectURL(file[0]));
+    setFiles(newState);
   };
 
   return (
-    <div className={classes.Div}>
-      <div className={classes.SubDiv}>
+    <div className={classes.portal}>
+      <div className={classes.subDiv}>
         <h3>PRIDĖTI DETALĘ</h3>
 
-        <ul className={classes.ListStyle}>
-          <li className={classes.formGroup}>
-            <label htmlFor="select auto"> Pasirinkti automobilį</label>
-            <select name="" id="">
-              <option value="">123</option>
-            </select>
+        <form className={classes.listStyle}>
+          <div className={classes.formGroup}>
+            <SelectComp
+              options={dismantleCar.options}
+              label={dismantleCar.title}
+              handler={setDismantleCars}
+            />
 
-            <button>PRIDĖTI AUTOMOBILĮ</button>
-          </li>
-          {/* Markė */}
-
-          <SelectOptions
-            // id={brand1.id}
-            onChange={handleInput}
-            // keyDB={brand1.id}
-            // 'make' - the key in Model
-            title={brand1.title}
-            option={brand1.option}
+            <Button>PRIDĖTI AUTOMOBILĮ</Button>
+          </div>
+          <Input
+            title={'Detalės pavadinimas'}
+            keyName={'partName'}
+            setValue={(name: string, value: string) =>
+              dispatch(addValue({ key: name, value: value }))
+            }
+            isRequired={true}
           />
-          <SelectUserInput
-            // id={brand1.id
-
-            onChange={setModel}
-            // keyDB={brand1.id}
-            // 'make' - the key in Model
-
-            option={models}
+          <SelectComp
+            options={brands.options}
+            label={'Gamintojas'}
+            keyName={'make'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
-
-          <SelectComp optionsArray={getYearsmModel()} />
-
-          <SelectComp optionsArray={conditionPart.option} selectCompLabel={conditionPart.title}/>
-
-          <SelectComp optionsArray={positionPart.option} selectCompLabel={positionPart.title}/>
-
-          <SelectComp optionsArray={bodyType.option} selectCompLabel={bodyType.title}/>
-
-          <SelectComp optionsArray={steeringWheelPosition.option} selectCompLabel={steeringWheelPosition.title}/>
-
-          <SelectComp optionsArray={steeringWheel.option} selectCompLabel={steeringWheel.title}/>
-          {/*
-          <SelectInput title={partNameSearch.title}/>
-          <SelectComponent
-            id={category.id}
-            onChange={handleInput}
-            keyDB={category.title}
-            title={category.title}
-            option={category.option}
+          <SelectComp
+            options={modelsOptions}
+            label={'Modelis'}
+            keyName={'model'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
-          <SelectComponent
-            id={subCategory.id}
-            onChange={handleInput}
-            keyDB={subCategory.title}
-            title={subCategory.title}
-            option={subCategory.option}
+          <SelectComp
+            options={setYears()}
+            label={'Metai'}
+            keyName={'carProductionYear'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
           />
-          <SelectInput title={partName.title}/>
-          <SelectComponent
-            id={condition.id}
-            onChange={handleInput}
-            keyDB={condition.title}
-            title={condition.title}
-            option={condition.option}
+          <Categories />
+          <SelectComp
+            required={true}
+            options={conditionPart.option}
+            label={conditionPart.title}
+            keyName={'condition'}
+            handler={(name: string, value: string) =>
+              dispatch(addValue({ key: name, value: value }))
+            }
           />
-          <SelectComponent
-            id={position.id}
-            onChange={handleInput}
-            keyDB={position.title}
-            title={position.title}
-            option={position.option}
-          /> */}
-
-         
-        
-        </ul>
-        <p>Detalės kodas</p>
-        <input></input>
-        <p>Pridėti papildomų kodų (click)</p>
+          <SelectComp
+            options={positionPart.option}
+            label={positionPart.title}
+            keyName={'position'}
+            handler={(name: string, value: string) =>
+              dispatch(addValue({ key: name, value: value }))
+            }
+          />
+          <SelectComp
+            options={bodyType.option}
+            label={bodyType.title}
+            keyName={'bodyTape'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
+          />
+          <SelectComp
+            options={steeringWheelPosition.option}
+            label={steeringWheelPosition.title}
+            keyName={'steeringWheelPosition'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
+          />
+          <SelectComp
+            options={drivenWheel.option}
+            label={drivenWheel.title}
+            keyName={'drivingWheels'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
+          />
+        </form>
+        <PartCodeForm
+          inputList={partCodes}
+          setCodes={(value: []) => dispatch(setPartCodesAction(value))}
+          setInputList={setPartCodes}
+        />
       </div>
-
-      <div className={classes.SubDiv}>
-        <ul className={classes.ListStyle}>
-         <SelectComp optionsArray={gearBox.option} selectCompLabel={gearBox.title}/>
-          <SelectComp optionsArray={colorPart.option} selectCompLabel={colorPart.title}/>
-          <li className={classes.formGroup}>
-            <label htmlFor="odometer">Rida </label>
-            <input type="text" />
-          </li>
-          <SelectComp optionsArray={fuel.option} selectCompLabel={fuel.title}/>
-          <li className={classes.formGroup}>
-            <label htmlFor="engine capacity">Variklio talpa</label>
-            <select name="" id="">
-              <option value="">5</option>
-            </select>
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor="engine power">Variklio galia</label>
-            <select name="" id="">
-              <option value="">6</option>
-            </select>
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor="lenght">Ilgis ,cm</label>
-            <input type="text" />
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor="width">Plotis, cm</label>
-            <input type="text" />
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor="height">Aukštis, cm</label>
-            <input type="text" />
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor="weight"> Svoris, kg</label>
-            <input type="text" />
-          </li>
-          <li className={classes.formGroup}>
-            <label htmlFor="price">Kaina</label>
-            <input type="text" />
-          </li>
-        </ul>
-        <p>Aprašymas</p>
-        <textarea name=""></textarea>
+      <div className={classes.subDiv}>
+        <div className={classes.listStyle}>
+          <SelectComp
+            options={gearBox.option}
+            label={gearBox.title}
+            keyName={'transmission'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
+          />
+          <SelectComp
+            options={colorPart.option}
+            label={colorPart.title}
+            keyName={'carColor'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
+          />
+          <div className={classes.formGroup}>
+            <Input
+              title={'Rida'}
+              regExp={regEx}
+              keyName={'odometer'}
+              setValue={(name: string, value: string) =>
+                dispatch(addValue({ key: name, value: value }))
+              }
+            />
+          </div>
+          <SelectComp
+            options={fuel.option}
+            label={fuel.title}
+            keyName={'fuel'}
+            handler={(name: string, value: string) =>
+              dispatch(addCarDetails({ key: name, value: value }))
+            }
+          />
+          <div className={classes.formGroup}>
+            <Input
+              title={'Variklio talpa'}
+              regExp={regEx}
+              maxLength={7}
+              keyName={'engineCapacity'}
+              setValue={(name: string, value: string) =>
+                dispatch(addCarDetails({ key: name, value: value }))
+              }
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <Input
+              title={'Variklio galia'}
+              regExp={regEx}
+              maxLength={7}
+              keyName={'enginePower'}
+              setValue={(name: string, value: string) =>
+                dispatch(addCarDetails({ key: name, value: value }))
+              }
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <Input
+              title={'Ilgis cm *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              keyName={'length'}
+              setValue={(name: string, value: string) =>
+                dispatch(addDimensions({ key: name, value: value }))
+              }
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <Input
+              title={'Plotins cm *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              keyName={'width'}
+              setValue={(name: string, value: string) =>
+                dispatch(addDimensions({ key: name, value: value }))
+              }
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <Input
+              title={'Aukštis, cm *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              keyName={'height'}
+              setValue={(name: string, value: string) =>
+                dispatch(addDimensions({ key: name, value: value }))
+              }
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <Input
+              title={'Svoris, kg *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              keyName={'weight'}
+              setValue={(name: string, value: string) =>
+                dispatch(addValue({ key: name, value: value }))
+              }
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <Input
+              title={'Kaina *'}
+              isRequired={true}
+              regExp={regEx}
+              maxLength={7}
+              keyName={'price'}
+              setValue={(name: string, value: string) =>
+                dispatch(addValue({ key: name, value: value }))
+              }
+            />
+          </div>
+        </div>
+        <p>Aprašymas *</p>
+        <textarea
+          name=''
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+            dispatch(
+              addValue({ key: 'description', value: event.target.value })
+            )
+          }
+        ></textarea>
       </div>
 
       {/* Image */}
 
-      {/* <div className={classes.SubDiv}>
-        <p>Pridėti nuotraukas:</p>
-        <div>
-          <img src={testas} alt='nuotrauka' />
-        </div>
-        <button>PRIDETI</button>
-      </div> */}
+      <Upload files={files} handler={handleImgUpload} />
+
+      <Button id={1} type='submit' onClick={handleSubmit}>
+        Pridėti
+      </Button>
     </div>
   );
 };
