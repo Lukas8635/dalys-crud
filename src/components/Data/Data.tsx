@@ -1,42 +1,70 @@
-export interface Brand {
+export interface CarCollectByBrand {
   id: string;
   title: string;
-  models: ModelType[];
+  option: OptionInterface[];
 }
 
-export interface EngineType {
-  title: string;
-  engPower: string;
-  engCapacity: number;
-  fuel: string;
-  year: number[] | number;
-}
-
-export interface ModelType {
-  model: string;
+export interface OptionInterface {
   id: string;
-  engines: EngineType[];
+  pav: string;
+  models: ModelInterface[];
 }
+
+export interface ModelInterface {
+  pav: string;
+  id: string;
+}
+
+export const brand1 = {
+  id: "brand1",
+  title: "Gamintojas",
+  option: [
+    {
+      id: "noneID",
+      pav: "-",
+      models: [],
+    },
+    {
+      id: "bmwId",
+      pav: "BMW",
+      models: [
+        { pav: "---", id: "nodeID" },
+        { pav: "X5", id: "x5Id" },
+        { pav: "X3", id: "x3Id" },
+        { pav: "530", id: "530Id" },
+      ],
+    },
+    {
+      id: "audiId",
+      pav: "Audi",
+      models: [
+        { pav: "---", id: "nodeID" },
+        { pav: "100", id: "100Id" },
+        { pav: "80", id: "80Id" },
+        { pav: "R8", id: "r8Id" },
+      ],
+    },
+  ],
+};
 
 export const category = {
   title: "Kategorija",
   id: "category1",
-  required: true,
   option: [
     {
-      title: "Apšvietimo sistema",
+      pav: "Apšvietimo sistema",
       id: "1231",
     },
     {
-      title: "Kėbulas",
+      pav: "Kėbulas",
       id: "body1",
     },
     {
-      title: "Išmetamūjų dujų sistema",
+      pav: "Išmetamūjų dujų sistema",
       id: "exhaush gasses system1",
     },
     {
-      title: "Stiklai",
+      pav: "Stiklai",
       id: "glass1",
     },
   ],
@@ -45,23 +73,37 @@ export const category = {
 export const subCategory = {
   title: "SubKategorija",
   id: "subCategory1",
-  required: true,
   option: [
     {
-      title: "Galinis žibintas",
+      pav: "Galinis žibintas",
       id: "rear light 1",
     },
     {
-      title: "Priekinis žibintas",
+      pav: "Priekinis žibintas",
       id: "front light1",
     },
     {
-      title: "Posūkio žibintas",
+      pav: "Posūkio žibintas",
       id: "turn ligth1",
     },
     {
-      title: "Priešrūkinis žibintas",
+      pav: "Priešrūkinis žibintas",
       id: "fog light1",
+    },
+  ],
+};
+
+export const condition = {
+  title: "Būklė",
+  id: "conditonory1",
+  option: [
+    {
+      pav: "Nauja",
+      id: "new 1",
+    },
+    {
+      pav: "Naudota",
+      id: "second hand1",
     },
   ],
 };
@@ -71,54 +113,53 @@ export const position = {
   id: "position1",
   option: [
     {
-      title: "Priekis",
+      pav: "Priekis",
       id: "front1",
     },
     {
-      title: "Galas",
+      pav: "Galas",
       id: "rear1",
     },
     {
-      title: "Kairė",
+      pav: "Kairė",
       id: "left1",
     },
     {
-      title: "Dešinė",
+      pav: "Dešinė",
       id: "right1",
     },
   ],
 };
 
 export const partNameSearch = {
-  title: "Detalės titleadinimo paieška",
+  title: "Detalės pavadinimo paieška",
 };
 
 export const partName = {
-  title: "Detalės titleadinimas",
+  title: "Detalės pavadinimas",
 };
 
 //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< Engine >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-const bmwX5Engines: ModelType = {
+const bmwX5Engines = {
   model: "X5",
-  id: "bmw-x5",
   engines: [
     {
-      title: "xDrive 3.0d 180kW",
+      pav: "xDrive 3.0d 180kW",
       engPower: "180 kW",
       engCapacity: 3000,
       fuel: "Diesel",
       year: [2013, 2014, 2015],
     },
     {
-      title: "xDrive 3.5i 235kW",
+      pav: "xDrive 3.5i 235kW",
       engPower: "235 kW",
       engCapacity: 3500,
       fuel: "Gasoline",
       year: [2013, 2014, 2015],
     },
     {
-      title: "xDrive 5.0i 300kW",
+      pav: "xDrive 5.0i 300kW",
       engPower: "300 kW",
       engCapacity: 5000,
       fuel: "Gasoline",
@@ -127,19 +168,18 @@ const bmwX5Engines: ModelType = {
   ],
 };
 
-const bmwX3Engines: ModelType = {
+const bmwX3Engines = {
   model: "X3",
-  id: "bmw-x3",
   engines: [
     {
-      title: "xDrive 1.8d 100kW",
+      pav: "xDrive 1.8d 100kW",
       engPower: "100 kW",
       engCapacity: 1800,
       fuel: "Diesel",
       year: 2013,
     },
     {
-      title: "xDrive 3.0i 200kW",
+      pav: "xDrive 3.0i 200kW",
       engPower: "200 kW",
       engCapacity: 3000,
       fuel: "Gasoline",
@@ -148,19 +188,18 @@ const bmwX3Engines: ModelType = {
   ],
 };
 
-const audi100Engines: ModelType = {
+const audi100Engines = {
   model: "100",
-  id: "audi-100",
   engines: [
     {
-      title: "1.8i 55kW",
+      pav: "1.8i 55kW",
       engPower: "55 kW",
       engCapacity: 1800,
       fuel: "Gasoline",
       year: 1983,
     },
     {
-      title: "2.0d 51kW",
+      pav: "2.0d 51kW",
       engPower: "51 kW",
       engCapacity: 2000,
       fuel: "Diesel",
@@ -169,19 +208,18 @@ const audi100Engines: ModelType = {
   ],
 };
 
-const audi80Engines: ModelType = {
+const audi80Engines = {
   model: "80",
-  id: "audi-80",
   engines: [
     {
-      title: "1.5i 45kW",
+      pav: "1.5i 45kW",
       engPower: "45 kW",
       engCapacity: 1500,
       fuel: "Gasoline",
       year: 1989,
     },
     {
-      title: "2.0i 69kW",
+      pav: "2.0i 69kW",
       engPower: "69 kW",
       engCapacity: 2000,
       fuel: "Gasoline",
@@ -190,19 +228,18 @@ const audi80Engines: ModelType = {
   ],
 };
 
-const audiR8Engines: ModelType = {
+const audiR8Engines = {
   model: "R8",
-  id: "audi-r8",
   engines: [
     {
-      title: "4.2 FSI quattro 316kW",
+      pav: "4.2 FSI quattro 316kW",
       engPower: "316 kW",
       engCapacity: 4200,
       fuel: "Gasoline",
       year: 2015,
     },
     {
-      title: "5.2 FSI quattro 412kW",
+      pav: "5.2 FSI quattro 412kW",
       engPower: "412 kW",
       engCapacity: 5200,
       fuel: "Gasoline",
@@ -211,131 +248,96 @@ const audiR8Engines: ModelType = {
   ],
 };
 
+export const getYearsmModel = () => {
+  const date = new Date();
+  const option = date.getFullYear();
+  let yearsArray = [];
+  const title = "Variklis";
+  for (let i = 0; i < 71; i++) {
+    yearsArray.push(option - i);
+  }
+  return yearsArray;
+};
+
 export const conditionPart = {
-  title: "Būklė*",
-  id:'condition1',
-  required:true,
-  option: [
-    { title: "Nauja", id: "new" },
-    { title: "Naudota", id: "used" },
-    { title: "Restauruota", id: "refurbished" },
-  ],
+  title: "Būklė",
+  option: ["Nauja", "Naudota", "Restauruota"],
 };
 
 export const positionPart = {
   title: "Pozicija",
   option: [
-    { title: "Priekyje", id: "front" },
-    { title: "Gale", id: "rear" },
-    { title: "Kairėje", id: "left" },
-    { title: "Dešinėje", id: "right" },
-    { title: "Priekyje,kairėje", id: "front_left" },
-    { title: "Priekyje,dešinėje", id: "front_right" },
-    { title: "Gale,kairėje", id: "rear_left" },
-    { title: "Gale,dešinėje", id: "rear_right" },
+    "Priekyje",
+    "Gale",
+    "Kairėje",
+    "Dešinėje",
+    "Kairėje,priekyje",
+    "Dešinėje,priekyje",
+    "Kairėje,gale",
+    "Dešinėje,gale",
   ],
 };
 
 export const bodyType = {
   title: "Kėbulo tipas",
   option: [
-    { title: "Sedanas", id: "sedan" },
-    { title: "Universalas", id: "caravan" },
-    { title: "Hečbekas", id: "hatchback" },
-    { title: "Vienatūris", id: "minivan" },
-    { title: "Visureigis", id: "suv" },
-    { title: "Kupė(Coupe)", id: "coupe" },
-    { title: "Komercinis", id: "comemrtial" },
-    { title: "Kabrioletas", id: "cabriolet" },
-    { title: "Limuzinas", id: "limousine" },
-    { title: "Pikapas", id: "pickup" },
-    { title: "Kita", id: "other" },
+    "Sedanas",
+    "Universalas",
+    "Hečbekas",
+    "Vienatūris",
+    "Visureigis",
+    "Kupė(Coupe)",
+    "Komercinis",
+    "Kabrioletas",
+    "Limuzinas",
+    "Pikapas",
+    "Kita",
   ],
 };
 
 export const steeringWheelPosition = {
   title: "Vairo padėtis",
-  option: [
-    { title: "Kairė", id: "left" },
-    { title: "dešinė", id: "right" },
-  ],
+  option: ["Kairė", "dešinė"],
 };
 
-export const drivenWheel = {
+export const steeringWheel = {
   title: "Varomieji ratai",
-  option: [
-    { title: "Priekiniai", id: "front" },
-    { title: "Galiniai", id: "rear" },
-    { title: "Visi", id: "all" },
-  ],
+  option: ["Priekiniai", "Galiniai", "Visi"],
 };
 
 export const gearBox = {
   title: "Pavarų dežė",
-  option: [
-    { title: "Automatinė", id: "automatic" },
-    { title: "Mechaninė", id: "manual" },
-  ],
+  option: ["Automatine", "Mechaninė"],
 };
 
 export const colorPart = {
   title: "Spalva",
   option: [
-    { title: "Juoda", id: "black" },
-    { title: "Pilka", id: "grey" },
-    { title: "Balta", id: "white" },
-    { title: "Violetinė", id: "violet" },
-    { title: "Mėlyna", id: "blue" },
-    { title: "Žalia", id: "green" },
-    { title: "Geltona", id: "yellow" },
-    { title: "Oranžinė", id: "orange" },
-    { title: "Raudona", id: "red" },
-    { title: "Ruda", id: "brown" },
-    { title: "Maišyta", id: "mixed" },
-    { title: "Kita", id: "other" },
+    "Juoda",
+    "Pilka",
+    "Balta",
+    "Violetinė",
+    "Mėlyna",
+    "Žalia",
+    "Geltona",
+    "Oranžinė",
+    "Raudona",
+    "Ruda",
+    "Maišyta",
+    "Kita",
   ],
 };
 
-export const fuel = {
-  title: "Kuro tipas",
-  option: [
-    { title: "Dyzelinas", id: "diesel" },
-    { title: "Benzinas", id: "gasoline" },
-    { title: "Benzinas/Dujos", id: "gasoline_gas" },
-    { title: "Benzinas/Elektra", id: "gasoline_electricity" },
-    { title: "Elektra", id: "electriciry" },
-    { title: "Dyzelinas/Elektra", id: "diesel_electricity" },
-    { title: "Bioetanolis", id: "bioethanol" },
-    { title: "Kita", id: "other" },
-  ],
-};
-
-export const brands = {
-  id: "brands",
-  title: "Gamintojas",
-  options: [
-    {
-      id: "bmwId",
-      title: "BMW",
-      models: [bmwX3Engines, bmwX5Engines],
-    },
-    {
-      id: "audiId",
-      title: "Audi",
-      models: [audi100Engines, audi80Engines, audiR8Engines],
-    },
-  ],
-};
-
-export const dismantleCar ={
-  id:'dismantle_car',
-  title:'Ardomas automobilis',
-  options: [
-    {
-      title: 'Audi Q5' , id: 'audi_q5'
-    },
-    {
-      title:'Lada 11', id :'lada_11'
-    }
+export const fuel={
+  title:"Kuro tipas",
+  option:[
+    "Dyzelinas",
+    "Benzinas",
+    "Benzinas/Dujos",
+    "Benzinas/Elektra",
+    "Elektra",
+    "Dyzelinas/Elektra",
+    "Bioetanolis",
+    "Kita",
   ]
 }
