@@ -1,35 +1,23 @@
 import React from "react";
+import { getYearsmModel } from "../../Data/Data";
+import { title } from "process";
 
-import classes from "./SelectComp.module.scss";
-
-interface Props {
-  label: string;
-  options: Option[];
-  handler: Function;
-  required?: boolean;
+export interface CustomSelectPropsInterface {
+  selectCompLabel: string | number;
+  optionsArray: (string | number)[];
 }
 
-export interface Option {
-  title: string;
-  id: string;
-}
-
-const SelectComp: React.FC<Props> = ({ label, options, handler }) => {
+const SelectComp: Function = (props: CustomSelectPropsInterface) => {
   return (
-    <div className={classes.formGroup}>
-      <label htmlFor="">{label}</label>
-      <select
-        required={true}
-        className={classes.select}
-        onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-          handler((event.target as HTMLSelectElement).value)
-        }
-      >
+    <div>
+      <label htmlFor="as">{props.selectCompLabel}</label>
+
+      <select>
         <option value={0}>----</option>
-        {options.map((option: Option) => {
+        {props.optionsArray.map((option) => {
           return (
-            <option value={option.id} key={option.id}>
-              {option.title}
+            <option value={option} key={option}>
+              {option}
             </option>
           );
         })}
