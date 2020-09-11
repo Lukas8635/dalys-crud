@@ -1,6 +1,6 @@
 import React from 'react';
-
-import classes from './Search.module.scss';
+import search from '../../img/search.svg'
+import classes from './search.module.scss';
 
 interface Props {
   label: string;
@@ -9,16 +9,18 @@ interface Props {
 
 const Search: React.FC<Props> = ({ label, setSearchQuery }) => {
   return (
-    <li className={classes.formGroup}>
-      <label htmlFor='search'>{label}</label>
+    <li >
+      
       <input
+        placeholder={label}
         className={classes.input}
         type='text'
         id={'search'}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           setSearchQuery(event.target.value)
         }
-      />
+      /> 
+      <img src={search} alt="search"/>
     </li>
   );
 };

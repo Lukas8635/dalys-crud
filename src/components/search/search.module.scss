@@ -1,9 +1,41 @@
-.formGroup {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;    
-}
+@import "../../mainSass/variables.module.scss";
 
-.input {
-    width: 100%;
+li{
+  list-style: none;
+  text-align: left;
+  margin-left: 1.7rem;
+  padding-bottom: 0.9rem;
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  font-family: $monserat;
+  
+  
+  
+
+  input{
+    color: #3d3d3d;
+    opacity: 1;
+    padding-left: 2rem;
+    border:0.2rem solid $borders;
+    border-radius: 0.7rem;
+    width: 26.6rem;
+    height: 3.7rem;
+    font-size: $font-size-13px;
+    color: $black;
+    margin-right: 6rem;
+    font-weight: 600;
+  } 
+  ::placeholder {
+    
+    color:$selectText;
+    opacity: 1;
+  }
+  img{
+    margin-left: 18.5rem;
+    transform: translateY(1.4rem);
+    width: 1.8rem;
+    position: absolute;
+    z-index: 10;
+  }
 }

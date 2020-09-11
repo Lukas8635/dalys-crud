@@ -51,12 +51,14 @@ const PartCodeForm: React.FC<Props> = ({ inputList, setInputList, setCodes }) =>
 
   return (
     <div>
-      <label htmlFor=''>Detalės kodas *</label>
+      
       {inputList.map((x, index) => {
         return (
           <div className={classes.formGroup} key={index}>
             <input
               className={classes.input}
+              placeholder={'Detalės kodas (-ai)'}
+              
               maxLength={40}
               id={x.id}
               name='partCode'
@@ -66,15 +68,15 @@ const PartCodeForm: React.FC<Props> = ({ inputList, setInputList, setCodes }) =>
             <div>
               {inputList.length !== 1 && (
                 <button
-                  className={classes.button}
+                  className={classes.partCodeButton}
                   onClick={() => handleRemoveClick(x.id)}
                 >
-                  Pašalinti
+                  - Pašalinti
                 </button>
               )}
               <br />
               {inputList.length - 1 === index && (
-                <button onClick={handleAddClick}>Pridėti dar vieną kodą</button>
+                <button className={classes.partCodeButton} onClick={handleAddClick}>+ Pridėti papildomą kodą</button>
               )}
             </div>
           </div>

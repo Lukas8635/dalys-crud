@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import classes from './SelectComp.module.scss';
+import classes from "./SelectComp.module.scss";
+import { title } from "process";
 
 interface Props {
-  label: string;
+  placeholder: string;
   options: Option[];
   handler: Function;
   keyName?: string;
@@ -16,31 +17,35 @@ export interface Option {
 }
 
 const SelectComp: React.FC<Props> = ({
-  label,
+  placeholder,
   options,
   handler,
   keyName,
   required,
 }) => {
   return (
-    <div className={classes.formGroup}>
-      <label htmlFor=''>{label}</label>
-      <select
-        required={required ? required : false}
-        className={classes.select}
-        onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-          handler(keyName, (event.target as HTMLSelectElement).value)
-        }
-      >
-        <option value={0}>----</option>
-        {options.map((option: Option) => {
-          return (
-            <option value={option.id} key={option.id}>
-              {option.title}
-            </option>
-          );
-        })}
-      </select>
+    <div className={classes.main }>
+      <div className={classes.selectComponent}>
+        <select
+          placeholder={title}
+          required={required ? required : false}
+          className={classes.selectArrow}
+          onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+            handler(keyName, (event.target as HTMLSelectElement).value)
+          }
+        >
+          <option value={0}  hidden>
+            {placeholder}
+          </option>
+          {options.map((option: Option) => {
+            return (
+              <option value={option.id} key={option.id}>
+                {option.title}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     </div>
   );
 };

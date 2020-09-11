@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 31" width="31" height="31">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #fff;stroke: #eaeaea;paint-order:stroke fill markers;stroke-width: 4 } 
+		.txt1 { font-size: 36px;line-height: 14px;fill: #eaeaea;font-weight: 600;font-family: "Montserrat-SemiBold", "Montserrat" } 
+	</style>
+	<path id="Ellipse 2" class="shp0" d="M15.75 3C22.79 3 28.5 8.71 28.5 15.75C28.5 22.79 22.79 28.5 15.75 28.5C8.71 28.5 3 22.79 3 15.75C3 8.71 8.71 3 15.75 3Z" />
+	<text id="+" style="transform: matrix(0.654,0,0,0.654,10.192,23.269)" >
+		<tspan x="0" y="0" class="txt1">+</tspan>
+	</text>
+</svg>

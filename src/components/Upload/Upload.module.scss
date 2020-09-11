@@ -1,27 +1,64 @@
-.upload {
-  width: 50%;
-}
+@import '../../mainSass/variables.module.scss';
 
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.main {
+  margin-top: 5rem;
+  .header {
 
-  input {
-    padding-top: 1rem;
+    text-align: left;
+
+    .addImg {
+      font-family: $monserat;
+      font-size: 1.3rem;
+      text-align: left;
+      padding: 1rem 25rem 1rem 2rem;
+
+      margin-left: 1.9rem;
+      border: 0.2rem solid $borders;
+      border-radius: 0.7rem;
+      color: $textGrey;
+      position: relative;
+
+      img {
+
+        position: absolute;
+        justify-items: flex-start;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 3rem;
+        right: 2rem;
+
+      }
+
+
+    }
+  }
+
+  .gallery {
+    padding: 0 1.8rem;
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 5vw);
+    column-gap: 0.1rem;
+    row-gap: 1rem;
+
+  }
+
+  .image {
+
+    width: 95%;
+    height: 100%;
+    object-fit: cover;
+    border: 0.2rem solid $borders;
+    border-radius: 0.7rem;
   }
 }
 
-.imagesContainer {
-  object-fit: cover;
-  width: 10rem;
-  display: inline-block;
-  margin: 1rem;
-}
+// .header {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
 
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border: 1px solid grey;
-}
+//   input {
+//     padding-top: 1rem;
+//   }

@@ -1,9 +1,54 @@
-.formGroup {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;    
+@import "../../../mainSass/variables.module.scss";
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+
+// $padding:(
+// padding-right:1rem
+// );
+
+.main{
+  text-align: left;
+  margin-left: 1.8rem;
+  padding-bottom: 0.9rem;
+  padding-right: 1rem;
+  
 }
 
-.select {
-  width: 100%;
+.selectComponent{
+  position: relative;
+}
+.selectComponent select {
+    background: transparent;
+    padding-left: 2rem;
+    padding-right: 1rem;
+    font-weight: 600;
+    font-family: $monserat;
+    border:0.2rem solid $borders;
+    border-radius: 0.7rem;
+    width: 29rem;
+    height: 4rem;
+    font-size: $font-size-13px;
+    appearance: none;
+    outline: none;
+    color: $selectText;
+    
+    padding-right: 1rem;
+    option {
+      color: $selectText;
+    }
+
+  }
+  
+  
+
+.selectComponent:after{
+  content: 'keyboard_arrow_down';
+  font-family: 'material icons';
+  position: absolute;
+  font-size: 2rem;
+  color: $orangebtn;
+  right: 6.2rem;
+  top: 50%;
+  transform: translateY(-50%);  
+  pointer-events: none;
 }
